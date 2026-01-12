@@ -1,0 +1,55 @@
+---
+import ColorCode from "../../components/guides/ColorCode.astro"
+import data from "../../../tasks/datas/token.json"
+type ValueData = { name: string; value: string }
+
+const spaceToken = (): Array<ValueData> => {
+  const temp = getObjectToArray(data?.global?.space)
+  return temp
+}
+const getObjectToArray: any = (obj: { [key: string]: string }) => {
+  const temp = []
+  const copies: { [key: string]: any } = obj
+  for (const key in copies) {
+    const value = copies[key]
+    const obj = { name: key, value: value.value }
+
+    temp.push(obj)
+  }
+  return temp
+}
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<h2>Space Tokens</h2>
+
+<ul class="space_tokens">
+  {
+    spaceToken().map((value) => {
+      return (
+        <li>
+          <button type="button">
+            <span>
+              <span class="css-token">--space-{value.name}</span>
+              <i class="copy">복사하기</i>
+            </span>
+            <span>{value.value}</span>
+          </button>
+        </li>
+      )
+    })
+  }
+</ul>
+<script is:inline>
+  function copyText(e) {
+    const target = e.currentTarget
+    const code = target.querySelector(".css-token")
+    console.log(code)
+    navigator.clipboard.writeText(code.textContent)
+    alert(`${code.textContent} 복사되었습니다`)
+  }
+  document.querySelectorAll(".space_tokens button").forEach((item) => {
+    item.addEventListener("click", copyText)
+  })
+</script>

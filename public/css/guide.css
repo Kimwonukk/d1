@@ -1,0 +1,105 @@
+h2 {
+  font-size: 24px;
+  background: #eee;
+  padding: 16px;
+  position: sticky;
+  top: 0;
+  margin: 12px 0;
+}
+
+.base_color_tokens h3 {
+  font-size: 20px;
+  padding: 12px 20px;
+  color: #1a1a1a;
+}
+
+.copy {
+  text-indent: -9999px;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.2061 4.00488C18.3194 4.11211 20 5.85996 20 8V16L19.9951 16.2061C19.8879 18.3194 18.14 20 16 20H8C5.79086 20 4 18.2091 4 16V8C4 5.79086 5.79086 4 8 4H16L16.2061 4.00488ZM8 6C6.89543 6 6 6.89543 6 8V16C6 17.1046 6.89543 18 8 18H16C17.1046 18 18 17.1046 18 16V8C18 6.89543 17.1046 6 16 6H8ZM12 0C12.5523 0 13 0.447715 13 1C13 1.55228 12.5523 2 12 2H5C3.34315 2 2 3.34315 2 5V12C2 12.5523 1.55228 13 1 13C0.447715 13 0 12.5523 0 12V5C0 2.23858 2.23858 0 5 0H12Z' fill='black'/%3E%3C/svg%3E%0A");
+  background-size: cover;
+}
+
+.color_code {
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% - 32px);
+  margin: 0 auto;
+  row-gap: 8px;
+}
+.color_code li {
+  flex: 0 0 calc((100% - 16px) / 3);
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px 0 #aaa;
+  border-radius: 8px;
+  padding: 8px;
+}
+.color_code li:not(:nth-child(3n+3)) {
+  margin-right: 8px;
+}
+.color_code .color_code_list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.color_code .color_code_list .color_code_box {
+  width: 40px;
+  height: 40px;
+}
+.color_code .color_code_list .color_code_box span {
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.color_code .color_code_list .color_code_content {
+  display: flex;
+  gap: 8px;
+}
+.color_code .color_code_list .color_code_content .codes {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 8px;
+}
+.color_code .color_code_list .color_code_content .codes span:first-child {
+  font-size: 16px;
+}
+.color_code .color_code_list .color_code_content .codes span:last-child {
+  font-size: 14px;
+  color: #666;
+}
+
+.space_tokens {
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% - 32px);
+  margin: 0 auto;
+}
+.space_tokens li {
+  flex: 0 0 calc((100% - 16px) / 3);
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px 0 #aaa;
+  border-radius: 8px;
+  padding: 16px 8px;
+}
+.space_tokens li:not(:nth-child(3n+3)) {
+  margin-right: 8px;
+}
+.space_tokens li button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.space_tokens li button span:first-child {
+  font-size: 16px;
+}
+.space_tokens li button span:last-child {
+  font-size: 14px;
+  color: #666;
+}
+
+/*# sourceMappingURL=guide.css.map */

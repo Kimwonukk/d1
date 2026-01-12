@@ -1,0 +1,27 @@
+{
+  "name": "d1",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "concurrently \"astro dev && npm run dev-css\" \"npm run dev-css\" \"npm run watch:tokens\"",
+    "build": "cross-env NODE_ENV=production npm run figmaToToken&&astro build && prettier --write \"dist/**/*.html\"",
+    "preview": "astro preview",
+    "build-css": "sass src/styles:dist/css --no-source-map --style=compressed",
+    "dev-css": "sass --watch src/styles:public/css --style=expanded",
+    "figmaToToken": "cross-env NODE_ENV=production node tasks/tokenforFigma.js",
+    "watch:tokens": "node tasks/tokenforFigma.js",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/preact": "^4.1.3",
+    "astro": "^5.16.7",
+    "concurrently": "^9.2.1",
+    "sass": "^1.97.2"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "onchange": "^7.1.0",
+    "prettier": "3.7.4",
+    "prettier-plugin-astro": "0.14.1"
+  }
+}

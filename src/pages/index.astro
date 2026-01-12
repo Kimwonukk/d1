@@ -1,0 +1,22 @@
+---
+import Layout from "../layouts/Layout.astro"
+import { getCollection } from "astro:content"
+
+const projects = await getCollection("project")
+---
+
+<Layout title="Projects">
+  <h1>Projects</h1>
+
+  <ul>
+    {
+      projects.map(({ data }: { data: any }) => (
+        <li>
+          <h2>{data.title}</h2>
+          <p>{data.description}</p>
+          <a href={data.github}>GitHub</a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

@@ -1,0 +1,68 @@
+---
+import ColorCode from "../../components/guides/ColorCode.astro"
+import data from "../../../tasks/datas/token.json"
+type ValueData = { name: string; value: string | object }
+
+const baseColor = (): Array<ValueData> => {
+  const temp = getObjectToArray(data?.global?.color)
+  return temp
+}
+const getObjectToArray: any = (obj: { [key: string]: any }) => {
+  const temp = []
+  const copies: { [key: string]: any } = obj
+  for (const key in copies) {
+    const value = copies[key]
+    const changeValue: { [key: string]: any } | string =
+      typeof value === "string" ? value : getValueToArray(value)
+
+    const obj = { name: key, value: changeValue }
+
+    temp.push(obj)
+  }
+  return temp
+}
+const getValueToArray: any = (obj: { [key: string]: any }) => {
+  const temp = []
+  const copies: { [key: string]: any } = obj
+  for (const key in copies) {
+    const value = copies[key]
+
+    const obj = { name: key, value: value.value }
+
+    temp.push(obj)
+  }
+  return temp
+}
+const getCasting = (value: object) => {
+  return value as Array<ValueData>
+}
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<h2>Base Color Tokens</h2>
+
+<ul class="base_color_tokens">
+  {
+    baseColor().map((value) => {
+      return (
+        <li>
+          <ColorCode name={value.name} value={getCasting(value.value as object)} />
+        </li>
+      )
+    })
+  }
+</ul>
+<script is:inline>
+  function copyText(e) {
+    const target = e.currentTarget
+    const code = target.querySelector(".codes .css-token")
+
+    navigator.clipboard.writeText(code.textContent)
+    alert(`${code.textContent} 복사되었습니다`)
+  }
+  document.querySelectorAll("button.color_code_content").forEach((item) => {
+    item.addEventListener("click", copyText)
+  })
+</script>

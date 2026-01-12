@@ -1,0 +1,31 @@
+---
+interface Props {
+  name: string
+  value: Array<{ name: string; value: string | object }>
+}
+const { name, value } = Astro.props // TypeScript 권장
+---
+
+<section>
+  <h3>{name}</h3>
+  <ul class="color_code">
+    {
+      value.map((value) => (
+        <li>
+          <div class="color_code_list">
+            <div class="color_code_box" style={`background-color: ${value.value}`} />
+            <button type="button" class="color_code_content">
+              <div class="codes">
+                <span>
+                  <span class="css-token">{`--color-${name}-${value.name}`}</span>
+                  <i class="copy">복사하기</i>
+                </span>
+                <span class="color_code_value">{value.value}</span>
+              </div>
+            </button>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>
