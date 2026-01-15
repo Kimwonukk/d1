@@ -1,11 +1,14 @@
 import fs from "fs"
+import { readFile, writeFile, mkdir } from "fs/promises"
 import path from "path"
+import chokidar from "chokidar"
 
-const INPUT_PATH = "./tasks/datas/token.json"
-const TOKEN_OUTPUT_PATH = "./src/styles/tokens/_tokens.scss"
-const MIXINS_OUTPUT_PATH = "./src/styles/mixins/_mixins.scss"
-
+const __dirname = path.resolve() // 현재 파일이 위치한 디렉터리
+const INPUT_PATH = path.join(__dirname, "tasks", "datas", "token.json")
+const TOKEN_OUTPUT_PATH = path.join(__dirname, "src", "styles", "tokens", "_tokens2.scss")
+const MIXINS_OUTPUT_PATH = path.join(__dirname, "src", "styles", "mixins", "_mixins2.scss")
 const environment = process.env.NODE_ENV
+
 console.log("환경:", environment)
 // 0. token과 mixin을 분리하여 처리
 const MIXINS_TYPE = ["typo"]
@@ -151,18 +154,20 @@ function mixinsToCSS(mixin) {
 // 5. export
 // module.exports = tokensToCSS
 
-function init() {
+async function init() {
   const tokens = JSON.parse(fs.readFileSync(INPUT_PATH, "utf8"))
-  //   tokensToCSS(tokens)
   const { token, mixin } = distributionType(tokens.global)
 
   const cssToToken = tokensToCSS(token)
   const cssToMixin = mixinsToCSS(mixin)
 
-  fs.mkdirSync(path.dirname(TOKEN_OUTPUT_PATH), { recursive: true })
-  fs.writeFileSync(TOKEN_OUTPUT_PATH, cssToToken)
-  fs.mkdirSync(path.dirname(MIXINS_OUTPUT_PATH), { recursive: true })
-  fs.writeFileSync(MIXINS_OUTPUT_PATH, cssToMixin)
+  // const raw = await readFile(TOKEN_OUTPUT_PATH, "utf8")
+  await mkdir(path.dirname(TOKEN_OUTPUT_PATH), { recursive: true })
+  await writeFile(TOKEN_OUTPUT_PATH, cssToToken)
+
+  // const raw2 = await readFile(MIXINS_OUTPUT_PATH, "utf8")
+  await mkdir(path.dirname(MIXINS_OUTPUT_PATH), { recursive: true })
+  await writeFile(MIXINS_OUTPUT_PATH, cssToMixin)
 }
 
 if (environment === "production") {
@@ -171,12 +176,10 @@ if (environment === "production") {
 } else {
   init()
   // 특정 파일 또는 디렉토리 감시
-  fs.watch("tasks/datas", { recursive: true }, (eventType, filename) => {
+  chokidar.watch("tasks/datas").on("all", (eventType, filename) => {
     if (filename) {
       console.log(`${filename} 파일이 변경되었습니다: ${eventType}`)
-      // 여기서 변경 시 수행할 동작 (예: 빌드, 다시 불러오기 등)을 구현
       init()
-
       console.log("✅watch generated")
     }
   })
