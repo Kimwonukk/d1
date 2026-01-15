@@ -1,13 +1,12 @@
-import fs from "fs"
 import { readFile, writeFile, mkdir } from "fs/promises"
 import path from "path"
 import chokidar from "chokidar"
 
 const __dirname = path.resolve() // 현재 파일이 위치한 디렉터리
 const INPUT_PATH = path.join(__dirname, "tasks", "datas", "token.json")
-const TOKEN_OUTPUT_PATH = path.join(__dirname, "src", "styles", "tokens", "_tokens2.scss")
-const MIXINS_OUTPUT_PATH = path.join(__dirname, "src", "styles", "mixins", "_mixins2.scss")
-const environment = process.env.NODE_ENV
+const TOKEN_OUTPUT_PATH = path.join(__dirname, "src", "styles", "tokens", "_tokens.scss")
+const MIXINS_OUTPUT_PATH = path.join(__dirname, "src", "styles", "mixins", "_mixins.scss")
+const environment = process.env.NODE_ENV || "development"
 
 console.log("환경:", environment)
 // 0. token과 mixin을 분리하여 처리
@@ -66,6 +65,9 @@ function formatValue(token) {
     const tmp = []
     if (value.fontFamily) {
       tmp.push(`  font-family: ${value.fontFamily};`)
+    }
+    if (value.textTransform) {
+      tmp.push(`  text-transform: ${value.textTransform};`)
     }
     if (value.fontWeight) {
       tmp.push(`  font-weight: ${value.fontWeight};`)
@@ -155,24 +157,35 @@ function mixinsToCSS(mixin) {
 // module.exports = tokensToCSS
 
 async function init() {
-  const tokens = JSON.parse(fs.readFileSync(INPUT_PATH, "utf8"))
-  const { token, mixin } = distributionType(tokens.global)
+  try {
+    const rawData = await readFile(INPUT_PATH, "utf8")
+    const tokens = JSON.parse(rawData)
+    const { token, mixin } = distributionType(tokens.global)
 
-  const cssToToken = tokensToCSS(token)
-  const cssToMixin = mixinsToCSS(mixin)
+    const cssToToken = tokensToCSS(token)
+    const cssToMixin = mixinsToCSS(mixin)
 
-  // const raw = await readFile(TOKEN_OUTPUT_PATH, "utf8")
-  await mkdir(path.dirname(TOKEN_OUTPUT_PATH), { recursive: true })
-  await writeFile(TOKEN_OUTPUT_PATH, cssToToken)
-
-  // const raw2 = await readFile(MIXINS_OUTPUT_PATH, "utf8")
-  await mkdir(path.dirname(MIXINS_OUTPUT_PATH), { recursive: true })
-  await writeFile(MIXINS_OUTPUT_PATH, cssToMixin)
+    await Promise.all([
+      mkdir(path.dirname(TOKEN_OUTPUT_PATH), { recursive: true }),
+      mkdir(path.dirname(MIXINS_OUTPUT_PATH), { recursive: true }),
+    ])
+    await Promise.all([
+      writeFile(TOKEN_OUTPUT_PATH, cssToToken),
+      writeFile(MIXINS_OUTPUT_PATH, cssToMixin),
+    ])
+    if (environment !== "production") {
+      console.log("✅ SCSS files generated")
+    }
+  } catch (e) {
+    console.error("❌ Token generation failed:", e)
+    if (environment !== "production") {
+      console.error(e.stack)
+    }
+  }
 }
 
 if (environment === "production") {
   init()
-  console.log("✅ generated")
 } else {
   init()
   // 특정 파일 또는 디렉토리 감시

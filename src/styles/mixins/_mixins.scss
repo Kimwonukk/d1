@@ -1,19 +1,21 @@
 @mixin typo-md-regular {
+  font-weight: 400;
   font-size: var(--font-size-md);
   line-height: var(--font-lineheight-md);
-  font-weight: 400;
 }
 .typo-md-regular {
   @include typo-md-regular;
 }
+
 @mixin typo-md-medium {
+  font-weight: 500;
   font-size: var(--font-size-md);
   line-height: var(--font-lineheight-md);
-  font-weight: 500;
 }
 .typo-md-medium {
   @include typo-md-medium;
 }
+
 @mixin typo-md-bold {
   font-weight: 700;
   font-size: var(--font-size-md);
@@ -22,6 +24,7 @@
 .typo-md-bold {
   @include typo-md-bold;
 }
+
 @mixin typo-sm-regular {
   font-weight: 400;
   font-size: var(--font-size-sm);
@@ -30,14 +33,16 @@
 .typo-sm-regular {
   @include typo-sm-regular;
 }
+
 @mixin typo-sm-medium {
+  font-weight: 500;
   font-size: var(--font-size-sm);
   line-height: var(--font-lineheight-sm);
-  font-weight: 500;
 }
 .typo-sm-medium {
   @include typo-sm-medium;
 }
+
 @mixin typo-sm-bold {
   font-weight: 700;
   font-size: var(--font-size-sm);
@@ -46,6 +51,7 @@
 .typo-sm-bold {
   @include typo-sm-bold;
 }
+
 @mixin typo-lg-reqular {
   font-weight: 400;
   font-size: var(--font-size-lg);
@@ -54,14 +60,16 @@
 .typo-lg-reqular {
   @include typo-lg-reqular;
 }
+
 @mixin typo-lg-medium {
+  font-weight: 500;
   font-size: var(--font-size-lg);
   line-height: var(--font-lineheight-lg);
-  font-weight: 500;
 }
 .typo-lg-medium {
   @include typo-lg-medium;
 }
+
 @mixin typo-lg-bold {
   font-weight: 700;
   font-size: var(--font-size-lg);
@@ -70,6 +78,7 @@
 .typo-lg-bold {
   @include typo-lg-bold;
 }
+
 @mixin typo-xl-regular {
   font-weight: 700;
   font-size: var(--font-size-xl);
@@ -78,6 +87,7 @@
 .typo-xl-regular {
   @include typo-xl-regular;
 }
+
 @mixin typo-xl-medium {
   font-weight: 500;
   font-size: var(--font-size-xl);
@@ -86,6 +96,7 @@
 .typo-xl-medium {
   @include typo-xl-medium;
 }
+
 @mixin typo-xl-bold {
   font-weight: 700;
   font-size: var(--font-size-xl);

@@ -55,15 +55,15 @@
 }
 
 .typo-md-regular {
+  font-weight: 400;
   font-size: var(--font-size-md);
   line-height: var(--font-lineheight-md);
-  font-weight: 400;
 }
 
 .typo-md-medium {
+  font-weight: 500;
   font-size: var(--font-size-md);
   line-height: var(--font-lineheight-md);
-  font-weight: 500;
 }
 
 .typo-md-bold {
@@ -79,9 +79,9 @@
 }
 
 .typo-sm-medium {
+  font-weight: 500;
   font-size: var(--font-size-sm);
   line-height: var(--font-lineheight-sm);
-  font-weight: 500;
 }
 
 .typo-sm-bold {
@@ -97,9 +97,9 @@
 }
 
 .typo-lg-medium {
+  font-weight: 500;
   font-size: var(--font-size-lg);
   line-height: var(--font-lineheight-lg);
-  font-weight: 500;
 }
 
 .typo-lg-bold {
