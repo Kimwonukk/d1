@@ -7,7 +7,7 @@ h2 {
   margin: 12px 0;
 }
 
-.base_color_tokens h3 {
+.base_section h3 {
   font-size: 20px;
   padding: 12px 20px;
   color: #1a1a1a;
@@ -22,53 +22,69 @@ h2 {
   background-size: cover;
 }
 
-.color_code {
+.token_code {
   display: flex;
   flex-wrap: wrap;
   width: calc(100% - 32px);
   margin: 0 auto;
   row-gap: 8px;
 }
-.color_code li {
+.token_code > li {
   flex: 0 0 calc((100% - 16px) / 3);
   box-sizing: border-box;
   box-shadow: 0px 4px 4px 0 #aaa;
   border-radius: 8px;
   padding: 8px;
 }
-.color_code li:not(:nth-child(3n+3)) {
+.token_code > li:not(:nth-child(3n+3)) {
   margin-right: 8px;
 }
-.color_code .color_code_list {
+.token_code .token_code_list {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.color_code .color_code_list .color_code_box {
+.token_code .token_code_list.half > * {
+  flex: 0 0 calc(50% - 10px);
+  justify-content: space-between;
+}
+.token_code .token_code_list .token_code_box {
   width: 40px;
   height: 40px;
 }
-.color_code .color_code_list .color_code_box span {
+.token_code .token_code_list .token_code_box span {
   color: white;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
-.color_code .color_code_list .color_code_content {
+.token_code .token_code_list .token_code_content {
   display: flex;
   gap: 8px;
 }
-.color_code .color_code_list .color_code_content .codes {
+.token_code .token_code_list .token_code_content .codes {
   display: flex;
   flex-direction: column;
   align-items: end;
   gap: 8px;
 }
-.color_code .color_code_list .color_code_content .codes span:first-child {
+.token_code .token_code_list .token_code_content .codes span {
+  text-align: left;
+}
+.token_code .token_code_list .token_code_content .codes span:first-child {
   font-size: 16px;
 }
-.color_code .color_code_list .color_code_content .codes span:last-child {
+.token_code .token_code_list .token_code_content .codes span:last-child {
   font-size: 14px;
+  color: #666;
+}
+.token_code .token_code_list .token_code_content .codes > ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+.token_code .token_code_list .token_code_content .codes > ul li {
   color: #666;
 }
 
@@ -78,26 +94,26 @@ h2 {
   width: calc(100% - 32px);
   margin: 0 auto;
 }
-.space_tokens li {
+.space_tokens > li {
   flex: 0 0 calc((100% - 16px) / 3);
   box-sizing: border-box;
   box-shadow: 0px 4px 4px 0 #aaa;
   border-radius: 8px;
   padding: 16px 8px;
 }
-.space_tokens li:not(:nth-child(3n+3)) {
+.space_tokens > li:not(:nth-child(3n+3)) {
   margin-right: 8px;
 }
-.space_tokens li button {
+.space_tokens > li button {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
-.space_tokens li button span:first-child {
+.space_tokens > li button span:first-child {
   font-size: 16px;
 }
-.space_tokens li button span:last-child {
+.space_tokens > li button span:last-child {
   font-size: 14px;
   color: #666;
 }

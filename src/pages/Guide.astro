@@ -2,8 +2,9 @@
 import Layout from "../layouts/GuideLayout.astro"
 import BaseColorToken from "./guides/BaseColorToken.astro"
 import SpaceToken from "./guides/SpaceToken.astro"
-
-const { name, value } = Astro.props // TypeScript 권장
+import TypoMixins from "./guides/TypoMixins.astro"
+import ShadowToken from "./guides/ShadowToken.astro"
+import GradientToken from "./guides/GradientToken.astro"
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
@@ -11,6 +12,21 @@ const { name, value } = Astro.props // TypeScript 권장
 <Layout>
   <main>
     <BaseColorToken />
+    <GradientToken />
     <SpaceToken />
+    <ShadowToken />
+    <TypoMixins />
   </main>
 </Layout>
+<script is:inline>
+  function copyText(e) {
+    const target = e.currentTarget
+    const code = target.querySelector(".css-token")
+
+    navigator.clipboard.writeText(code.textContent)
+    alert(`${code.textContent} 복사되었습니다`)
+  }
+  document.querySelectorAll("button.token_code_content").forEach((item) => {
+    item.addEventListener("click", copyText)
+  })
+</script>

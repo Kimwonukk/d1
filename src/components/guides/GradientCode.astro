@@ -1,0 +1,49 @@
+---
+interface Props {
+  name: string
+  value: Array<{ name: string; value: string | object }>
+}
+const { name, value } = Astro.props // TypeScript 권장
+function changeVariantToVar(out: string) {
+  let tmp = out
+  let startIndex = tmp.indexOf("{")
+  let endIndex = 0
+  while (startIndex >= 0) {
+    endIndex = tmp.indexOf("}", startIndex + 1)
+
+    const variant = tmp.substring(startIndex + 1, endIndex)
+    const changer = `var(--${variant.split(".").join("-")})`
+    tmp = tmp.split(`{${variant}}`).join(changer)
+    startIndex = tmp.indexOf("{", endIndex + 1)
+  }
+
+  return tmp
+}
+---
+
+<section>
+  <h3>{name}</h3>
+  <ul class="token_code">
+    {
+      value.map((value) => (
+        <li>
+          <div class="token_code_list half">
+            <div
+              class="token_code_box"
+              style={`background: var(--gradient-${name}-${value.name}`}
+            />
+            <button type="button" class="token_code_content">
+              <div class="codes">
+                <span>
+                  <span class="css-token">{`--gradient-${name}-${value.name}`}</span>
+                  <i class="copy">복사하기</i>
+                </span>
+                <span class="token_code_value">{changeVariantToVar(value.value)}</span>
+              </div>
+            </button>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>

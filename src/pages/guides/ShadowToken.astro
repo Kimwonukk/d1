@@ -1,10 +1,11 @@
 ---
 import ColorCode from "../../components/guides/ColorCode.astro"
 import data from "../../../tasks/datas/token.json"
+import ShadowCode from "../../components/guides/ShadowCode.astro"
 type ValueData = { name: string; value: string | object }
 
 const baseColor = (): Array<ValueData> => {
-  const temp = getObjectToArray(data?.global?.color)
+  const temp = getObjectToArray(data?.global?.shadow)
   return temp
 }
 const getObjectToArray: any = (obj: { [key: string]: any }) => {
@@ -41,16 +42,17 @@ const getCasting = (value: object) => {
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<h2>Base Color Tokens</h2>
+<h2>Shadow Tokens</h2>
 
 <ul class="base_section">
   {
     baseColor().map((value) => {
       return (
         <li>
-          <ColorCode name={value.name} value={getCasting(value.value as object)} />
+          <ShadowCode name={value.name} value={getCasting(value.value as object)} />
         </li>
       )
     })
   }
 </ul>
+

@@ -1,0 +1,49 @@
+---
+interface Props {
+  name: string
+  value: Array<{ name: string; value: string | object }>
+}
+const { name, value } = Astro.props // TypeScript 권장
+const toTokenName = (name: string) => {
+  let temp = name
+  if (!temp.includes("{")) {
+    return temp
+  }
+  temp = temp.replace("{", "").replace("}", "")
+  temp = temp.split(".").join("-")
+  return `--${temp}`
+}
+---
+
+<section>
+  <h3>{name}</h3>
+  <ul class="token_code">
+    {
+      value.map((value) => (
+        <li>
+          <div class="token_code_list">
+            <div
+              class="token_code_box"
+              style={`background-color: #eee;box-shadow: var(--shadow-${name}-${value.name});`}
+            />
+            <button type="button" class="token_code_content">
+              <div class="codes">
+                <span>
+                  <span class="css-token">{`--shadow-${name}-${value.name}`}</span>
+                  <i class="copy">복사하기</i>
+                </span>
+                <ul>
+                  {Object.entries(value.value).map(([key, value]) => (
+                    <li>
+                      {key}: {toTokenName(value)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </button>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>

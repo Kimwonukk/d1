@@ -26,6 +26,8 @@
   --color-secondary-dark-hover: #993d3d;
   --color-secondary-dark-active: #732e2e;
   --color-secondary-darker: #440202;
+  --color-third-normal: #498457;
+  --color-third-normal-hover: #bbffa0;
   --space-3xs: 2px;
   --space-2xs: 4px;
   --space-xs: 8px;
@@ -42,11 +44,85 @@
   --font-lineheight-md: 20px;
   --font-lineheight-lg: 24px;
   --font-lineheight-xl: 28px;
-  --textTest: {
-    "size": "{font.size.md}",
-    "weight": 400,
-    "lineHeight": "{font.lineheight.md}",
-  };
+  --shadow-drop-b300: 0 2px 3px 0 var(--color-black-300);
+  --shadow-inner-b300: inset 0 2px 3px 0 var(--color-black-300);
+  --gradient-primary-left: linear-gradient(90deg, var(--color-primary-light) 0%, var(--color-primary-darker) 100%);
+  --gradient-primary-right: linear-gradient(-90deg, var(--color-primary-light) 0%, var(--color-primary-darker) 100%);
+  --gradient-secondary-right: linear-gradient(-90deg, var(--color-secondary-light) 0%, var(--color-secondary-dark) 100%);
+  --gradient-secondary-left: linear-gradient(90deg, var(--color-secondary-light) 0%, var(--color-secondary-dark) 100%);
+  --gradient-panoram-left: linear-gradient(90deg, var(--color-primary-normal) 0%, var(--color-secondary-normal) 50%, var(--color-third-normal) 100% );
+}
+
+.typo-md-regular {
+  font-size: var(--font-size-md);
+  line-height: var(--font-lineheight-md);
+  font-weight: 400;
+}
+
+.typo-md-medium {
+  font-size: var(--font-size-md);
+  line-height: var(--font-lineheight-md);
+  font-weight: 500;
+}
+
+.typo-md-bold {
+  font-weight: 700;
+  font-size: var(--font-size-md);
+  line-height: var(--font-lineheight-md);
+}
+
+.typo-sm-regular {
+  font-weight: 400;
+  font-size: var(--font-size-sm);
+  line-height: var(--font-lineheight-sm);
+}
+
+.typo-sm-medium {
+  font-size: var(--font-size-sm);
+  line-height: var(--font-lineheight-sm);
+  font-weight: 500;
+}
+
+.typo-sm-bold {
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  line-height: var(--font-lineheight-sm);
+}
+
+.typo-lg-reqular {
+  font-weight: 400;
+  font-size: var(--font-size-lg);
+  line-height: var(--font-lineheight-lg);
+}
+
+.typo-lg-medium {
+  font-size: var(--font-size-lg);
+  line-height: var(--font-lineheight-lg);
+  font-weight: 500;
+}
+
+.typo-lg-bold {
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+  line-height: var(--font-lineheight-lg);
+}
+
+.typo-xl-regular {
+  font-weight: 700;
+  font-size: var(--font-size-xl);
+  line-height: var(--font-lineheight-xl);
+}
+
+.typo-xl-medium {
+  font-weight: 500;
+  font-size: var(--font-size-xl);
+  line-height: var(--font-lineheight-xl);
+}
+
+.typo-xl-bold {
+  font-weight: 700;
+  font-size: var(--font-size-xl);
+  line-height: var(--font-lineheight-xl);
 }
 
 html,

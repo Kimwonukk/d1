@@ -1,10 +1,10 @@
 ---
-import ColorCode from "../../components/guides/ColorCode.astro"
+import TypoMixinCode from "../../components/guides/TypoMixinCode.astro"
 import data from "../../../tasks/datas/token.json"
 type ValueData = { name: string; value: string | object }
 
-const baseColor = (): Array<ValueData> => {
-  const temp = getObjectToArray(data?.global?.color)
+const typos = (): Array<ValueData> => {
+  const temp = getObjectToArray(data?.global?.typo)
   return temp
 }
 const getObjectToArray: any = (obj: { [key: string]: any }) => {
@@ -41,16 +41,17 @@ const getCasting = (value: object) => {
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<h2>Base Color Tokens</h2>
+<h2>Typo Mixins</h2>
 
 <ul class="base_section">
   {
-    baseColor().map((value) => {
+    typos().map((value) => {
       return (
         <li>
-          <ColorCode name={value.name} value={getCasting(value.value as object)} />
+          <TypoMixinCode name={value.name} value={getCasting(value.value as object)} />
         </li>
       )
     })
   }
 </ul>
+

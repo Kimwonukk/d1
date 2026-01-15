@@ -1,5 +1,4 @@
 ---
-import ColorCode from "../../components/guides/ColorCode.astro"
 import data from "../../../tasks/datas/token.json"
 type ValueData = { name: string; value: string }
 
@@ -29,7 +28,7 @@ const getObjectToArray: any = (obj: { [key: string]: string }) => {
     spaceToken().map((value) => {
       return (
         <li>
-          <button type="button">
+          <button type="button" class="token_code_content">
             <span>
               <span class="css-token">--space-{value.name}</span>
               <i class="copy">복사하기</i>
@@ -41,15 +40,3 @@ const getObjectToArray: any = (obj: { [key: string]: string }) => {
     })
   }
 </ul>
-<script is:inline>
-  function copyText(e) {
-    const target = e.currentTarget
-    const code = target.querySelector(".css-token")
-    console.log(code)
-    navigator.clipboard.writeText(code.textContent)
-    alert(`${code.textContent} 복사되었습니다`)
-  }
-  document.querySelectorAll(".space_tokens button").forEach((item) => {
-    item.addEventListener("click", copyText)
-  })
-</script>
