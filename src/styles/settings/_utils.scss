@@ -1,0 +1,50 @@
+@mixin gap-utils {
+  $controls-gaps: (
+    gap-0: 0,
+    gap-4: 4,
+    gap-8: 8,
+    gap-12: 12,
+    gap-16: 16,
+    gap-20: 20,
+    gap-24: 24,
+  );
+
+  @each $name, $gap in $controls-gaps {
+    .#{$name} {
+      display: flex;
+      gap: #{$gap}px;
+    }
+  }
+}
+
+@include gap-utils;
+
+@mixin padding-utils {
+  $controls-paddings: (
+    p-0: "0",
+    p-4: "4px",
+    p-8: "8px",
+    p-12: "12px",
+    p-16: "16px",
+    p-20: "20px",
+    p-24: "24px",
+    p-4-8: "4px 8px",
+    p-8-4: "8px 4px",
+    p-8-12: "8px 12px",
+    p-12-8: "12px 8px",
+    p-12-16: "12px 16px",
+    p-16-12: "16px 12px",
+    p-16-20: "16px 20px",
+    p-20-16: "20px 16px",
+    p-20-24: "20px 24px",
+    p-24-20: "24px 20px",
+  );
+
+  @each $name, $padding in $controls-paddings {
+    .#{$name} {
+      padding: #{$padding};
+    }
+  }
+}
+
+@include padding-utils;

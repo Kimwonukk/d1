@@ -1,0 +1,34 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'button'> {
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: '' | 'true' | 'false' | boolean | undefined;
+}
+
+const {
+  variant = undefined,
+  disabled,
+  size = undefined,
+  href,
+  type = 'button',
+  ...rest
+} = Astro.props;
+
+const Tag = href && href !== '' ? 'a' : 'button';
+const _disabled = disabled === 'true' || disabled === true || disabled === '';
+---
+
+<Tag
+  class:list={['drop-down-item', variant && variant, size && size]}
+  href={href}
+  type={!href ? type : undefined}
+  {...rest}
+  data-dropdown-item=""
+  disabled={_disabled}
+>
+  <slot />
+</Tag>

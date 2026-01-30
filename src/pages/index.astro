@@ -1,22 +1,12 @@
 ---
-import Layout from "../layouts/Layout.astro"
-import { getCollection } from "astro:content"
+import Layout from '@layouts/Layout.astro';
+import Dashboard from '@templates/Dashboard.astro';
+import type { Meta } from '@scripts/type/meta';
 
-const projects = await getCollection("project")
+const { default: pagesData } = await import('../assets/data/pages.json');
+const pages = pagesData.pages as Meta[];
 ---
 
-<Layout title="Projects">
-  <h1>Projects</h1>
-
-  <ul>
-    {
-      projects.map(({ data }: { data: any }) => (
-        <li>
-          <h2>{data.title}</h2>
-          <p>{data.description}</p>
-          <a href={data.github}>GitHub</a>
-        </li>
-      ))
-    }
-  </ul>
+<Layout>
+  <Dashboard pages={pages} />
 </Layout>

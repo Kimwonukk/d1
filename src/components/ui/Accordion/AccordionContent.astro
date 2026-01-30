@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'div'> {
+  as?: 'div' | 'section';
+  padding?: 'p-0' | 'p-8' | 'p-12' | 'p-16' | 'p-20';
+}
+const { as = 'div', padding, role = 'region', class: className, ...rest } = Astro.props;
+const classLists = ['accordion-content', padding || 'p-12-16', className].filter(Boolean);
+const Tag = as;
+---
+
+<Tag role={role} class="accordion-wrapper" data-accordion-wrapper="" {...rest}>
+  <div class={classLists.join(' ')} data-accordion-content="">
+    <slot />
+  </div>
+</Tag>

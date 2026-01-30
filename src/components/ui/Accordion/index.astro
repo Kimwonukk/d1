@@ -1,0 +1,30 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+export { default as AccordionItem } from './AccordionItem.astro';
+export { default as AccordionTrigger } from './AccordionTrigger.astro';
+export { default as AccordionContent } from './AccordionContent.astro';
+
+interface Props extends HTMLAttributes<'div'> {
+  animation?: boolean;
+  multiple?: boolean;
+}
+const {
+  animation = true,
+  multiple = true,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const classLists = ['accordion', animation && 'animation', className].filter(
+  Boolean
+);
+---
+
+<div
+  class={classLists.join(' ')}
+  {...rest}
+  data-accordion={multiple ? 'multiple' : 'single'}
+>
+  <slot />
+</div>

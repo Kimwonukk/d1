@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+interface Props extends HTMLAttributes<'button' | 'div'> {
+  as?: 'button' | 'div';
+  type?: 'button' | 'submit' | 'reset' | null;
+}
+
+const { as = 'button', class: className, type, ...rest } = Astro.props;
+const classLists = ['accordion-trigger', className].filter(Boolean);
+const Tag = as;
+const _type: 'button' | 'submit' | 'reset' | null | undefined =
+  type || (as === 'button' ? 'button' : undefined);
+---
+
+<Tag type={_type} class={classLists.join(' ')} data-accordion-trigger="" {...rest}>
+  <slot />
+</Tag>

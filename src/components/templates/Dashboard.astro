@@ -1,0 +1,170 @@
+---
+import StatusBadge from '@ui/StatusBadge.astro';
+import type { Meta } from '@scripts/type/meta';
+
+interface Props {
+  pages: Meta[];
+}
+
+const { pages } = Astro.props;
+---
+
+<div class="dashboard">
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">페이지 목록</h1>
+    <p class="dashboard-subtitle">총 {pages.length}개</p>
+  </div>
+
+  <div class="dashboard-container">
+    <div class="dashboard-body">
+      <div class="table-wrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              pages.map((page: Meta) => (
+                <tr>
+                  <td>
+                    <code>{page.id}</code>
+                  </td>
+                  <td>
+                    <a href={page.path} class="page-link">
+                      <span class="page-link-title">{page.title}</span>
+                    </a>
+                  </td>
+                  <td>{page.author}</td>
+                  <td>
+                    {page.status === 'todo' && (
+                      <StatusBadge variant="default">대기</StatusBadge>
+                    )}
+                    {page.status === 'progress' && (
+                      <StatusBadge variant="info">진행중</StatusBadge>
+                    )}
+                    {page.status === 'complete' && (
+                      <StatusBadge variant="success">완료</StatusBadge>
+                    )}
+                    {page.status === 'test' && (
+                      <StatusBadge variant="warning">테스트</StatusBadge>
+                    )}
+                    {!page.status && (
+                      <StatusBadge variant="default">대기</StatusBadge>
+                    )}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global lang="scss">
+  @use '../../styles/mixins' as *;
+
+  .dashboard {
+    padding: 24px 0;
+
+    .dashboard-header {
+      margin-bottom: 24px;
+
+      .dashboard-title {
+        @include typo-xl-bold;
+
+        color: var(--color-black-900);
+        margin-bottom: 4px;
+      }
+
+      .dashboard-subtitle {
+        @include typo-sm-medium;
+
+        color: var(--color-black-300);
+      }
+    }
+  }
+
+  .dashboard-container {
+    background: var(--color-white-100);
+    border-radius: 12px;
+    box-shadow:
+      0 4px 6px -1px rgb(0 0 0 / 10%),
+      0 2px 4px -1px rgb(0 0 0 / 6%);
+    overflow: hidden;
+
+    .dashboard-body {
+      padding: 0;
+    }
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+
+    th,
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--color-black-50);
+
+      @include typo-sm-medium;
+    }
+
+    th {
+      background-color: var(--color-black-50);
+      color: var(--color-black-400);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    td {
+      color: var(--color-black-900);
+      vertical-align: middle;
+
+      code {
+        background: var(--color-black-50);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 0.85em;
+      }
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: rgb(var(--color-primary-normal), 0.02);
+    }
+  }
+
+  .page-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &:hover {
+      color: var(--color-primary-normal);
+      text-decoration: underline;
+    }
+  }
+
+  .page-link-title {
+    color: var(--color-black-900);
+    font-weight: 500;
+  }
+</style>

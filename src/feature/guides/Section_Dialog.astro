@@ -1,0 +1,69 @@
+---
+import ExampleCodeViewer from '@/components/code/ExampleCodeViewer.astro';
+import BasicDialog from './Examples/BasicDialog.astro';
+import BasicDialogCode from './Examples/BasicDialog.astro?raw';
+
+interface Props {
+  id?: string;
+  class?: string;
+}
+
+const { id, class: className } = Astro.props;
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<div id={id} class={className}>
+  <h2>Dialog</h2>
+  <p class="sub-comment">
+    Dialog는 모달과 비슷하지만, 모달보다는 단순한 알림을 위한 컴포넌트입니다.
+  </p>
+  <ExampleCodeViewer
+    component={BasicDialog}
+    code={BasicDialogCode}
+    js={`
+    /*
+
+    다이얼로그는 정적(static) 함수 호출에 의해 생성되는 팝업으로, 모달과는 다르게 팝업이 클로징된 이후에 
+    접근성을 위한 focus 처리를 직접적으로 해야 합니다. (then으로 이어지는 함수에서)
+    
+    Dialog.Alert({title,message,animation,btnLabel)
+    title: string,
+    message: string,
+    animation?: boolean = true,
+    btnLabel?: string = 'OK',
+
+    return Promise<void>
+
+
+    Dialog.Confirm({title,message,animation,btnLabel,btnLabelCancel})
+    title: string,
+    message: string,
+    animation?: boolean = true,
+    btnLabel?: string = 'OK',
+    btnLabelCancel?: string = 'Cancel',
+
+    return Promise<void>
+
+    */
+   
+    Dialog.Alert({
+      title: 'Alert',
+      message: 'Alert message',
+      btnLabel: 'OK',
+    }).then((res) => {
+      console.log('result', res);
+    })
+    
+    Dialog.Confirm({
+      title: 'Confirm',
+      message: 'Confirm message',
+      btnLabel: 'OK',
+      btnLabelCancel: 'Cancel',
+    }).then((res) => {
+      console.log('result', res);
+    });
+
+    `}
+  />
+</div>

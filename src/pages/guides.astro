@@ -1,0 +1,104 @@
+---
+import Layout from '@/layouts/GuideLayout.astro';
+import Section_Variables from '@/feature/guides/Section_Variables.astro';
+import Section_Buttons from '@/feature/guides/Section_Buttons.astro';
+import Section_DropDown from '@/feature/guides/Section_DropDown.astro';
+import Section_Modal from '@/feature/guides/Section_Modal.astro';
+import Section_Dialog from '@/feature/guides/Section_Dialog.astro';
+import Section_Accordion from '@/feature/guides/Section_Accordion.astro';
+import Section_Tab from '@/feature/guides/Section_Tab.astro';
+import Section_Toast from '@/feature/guides/Section_Toast.astro';
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+
+const MENU_LIST: { id: string; title: string }[] = [
+  {
+    id: 'variables',
+    title: 'Variables',
+  },
+  {
+    id: 'buttons',
+    title: 'Buttons',
+  },
+  {
+    id: 'dropdown',
+    title: 'DropDown',
+  },
+  {
+    id: 'accordion',
+    title: 'Accordion',
+  },
+  {
+    id: 'tab',
+    title: 'Tab',
+  },
+  {
+    id: 'modal',
+    title: 'Modal',
+  },
+  {
+    id: 'dialog',
+    title: 'Dialog',
+  },
+  {
+    id: 'toast',
+    title: 'Toast',
+  },
+];
+---
+
+<Layout>
+  <main class="guide-layout" slot="body">
+    <section class="guide-left">
+      <h2>GUIDE</h2>
+      <ul class="guide-left-list">
+        {
+          MENU_LIST.map((item, idx) => (
+            <li>
+              <button
+                type="button"
+                data-id={item.id}
+                class={idx === 0 ? 'active' : ''}
+              >
+                {item.title}
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+    <section class="guide-right">
+      <Section_Variables id="variables" class="section-category active" />
+      <Section_Buttons id="buttons" class="section-category" />
+      <Section_DropDown id="dropdown" class="section-category" />
+      <Section_Accordion id="accordion" class="section-category" />
+      <Section_Tab id="tab" class="section-category" />
+      <Section_Modal id="modal" class="section-category" />
+      <Section_Dialog id="dialog" class="section-category" />
+      <Section_Toast id="toast" class="section-category" />
+    </section>
+  </main>
+</Layout>
+
+<script is:inline>
+  const variables = document.querySelectorAll('.section-category');
+  const buttons = document.querySelectorAll('.guide-left-list button');
+  document.querySelector('.guide-left')?.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target === null || target.tagName !== 'BUTTON') return;
+    const id = target.getAttribute('data-id');
+    buttons.forEach((item) => {
+      item.classList.remove('active');
+    });
+    target.classList.add('active');
+    variables.forEach((item) => {
+      const itemId = item.getAttribute('id');
+      if (itemId === id) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+  });
+</script>

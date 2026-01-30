@@ -1,0 +1,83 @@
+---
+import type { Meta } from '@scripts/type/meta';
+
+export const pageMeta: Meta = {
+  id: 'tb-1001',
+  title: '카테고리B / 페이지2',
+  author: '김규연',
+  status: 'progress',
+};
+
+import Layout from '@layouts/Layout.astro';
+---
+
+<Layout pageMeta={pageMeta}>
+  <div class="dummy-content">
+    <div class="puppy-section">
+      <h2 class="h2">🐶 배경 이미지 예제</h2>
+      <p class="p">
+        이 섹션은 SCSS에서 직접 배경 이미지를 사용하는 예제입니다. Sharp로 사전
+        최적화된 이미지를 <code>/assets/images/</code> 경로에서 직접 불러옵니다.
+      </p>
+    </div>
+
+    <h2 class="h2">임시 제목 A</h2>
+    <p class="p">
+      텍스트의 높이와 간격을 조절하는 테스트를 진행하고 있습니다. 이 문단은
+      무의미한 글자들의 반복으로 채워질 수 있으며, 이는 웹페이지의 전반적인
+      레이아웃이 텍스트의 양에 따라 어떻게 변화하는지 관찰하기 위함입니다.
+      폰트의 크기와 행간의 조화가 적절한지 이 긴 문장을 통해 확인해 보시기
+      바랍니다.
+    </p>
+
+    <h2 class="h2">임시 제목 B</h2>
+    <p class="p">
+      페이지 하단부의 여백과 컴포넌트 간의 배치를 점검하기 위한 추가 텍스트
+      섹션입니다. 글자가 많아질수록 화면의 스크롤 높이가 어떻게 변하는지, 하단
+      영역이 잘리지 않고 정상적으로 노출되는지 등을 중점적으로 확인하십시오.
+      의미가 없는 문장들로 채워져 있어 독해의 필요성은 없습니다.
+    </p>
+  </div>
+</Layout>
+
+<style is:global lang="scss">
+  .puppy-section {
+    // 별칭(@images)을 사용하여 최적화된 배경 이미지 참조
+    background-image: url('@images/puppy-background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 4rem 2rem;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+
+    // 텍스트 가독성을 위한 오버레이
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgb(255 255 255 / 85%);
+      border-radius: 1rem;
+      z-index: 0;
+    }
+
+    // 콘텐츠를 오버레이 위로
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+    }
+
+    code {
+      background: rgb(0 0 0 / 5%);
+      padding: 0.2em 0.4em;
+      border-radius: 0.25rem;
+      font-family: monospace;
+    }
+  }
+</style>

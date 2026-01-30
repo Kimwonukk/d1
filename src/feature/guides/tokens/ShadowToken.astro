@@ -1,0 +1,47 @@
+---
+import data from '@/assets/data/token.json';
+import ShadowCode from '@/components/guides/ShadowCode.astro';
+
+// 최상위 데이터 타입
+export type ValueData = {
+  name: string;
+  value: string | ValueData[];
+};
+
+type TokenObject = {
+  [key: string]: string | TokenObject | { value: string };
+};
+
+// 객체를 ValueData 배열로 변환 (재귀)
+function getObjectToArray(obj: TokenObject): ValueData[] {
+  return Object.entries(obj).map(([key, value]) => {
+    if (typeof value === 'string') {
+      // 문자열이면 빈 name과 value를 배열로
+      return { name: key, value: [{ name: '', value }] };
+    } else {
+      const nested = Object.entries(value).map(([nestedKey, nestedValue]) => ({
+        name: nestedKey,
+        value: (nestedValue as { value: string })?.value,
+      }));
+      return { name: key, value: nested };
+    }
+  });
+}
+
+const baseColor = (): Array<ValueData> => {
+  const temp = getObjectToArray(data?.global?.shadow as TokenObject);
+  return temp;
+};
+---
+
+<h2>Shadow Tokens</h2>
+
+<ul class="base-section">
+  {
+    baseColor().map((value) => (
+      <li>
+        <ShadowCode name={value.name} value={value.value as ValueData[]} />
+      </li>
+    ))
+  }
+</ul>

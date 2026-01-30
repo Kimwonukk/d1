@@ -1,0 +1,31 @@
+---
+interface Props {
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+}
+
+const { maxWidth = 'xl' } = Astro.props;
+
+// maxWidth를 실제 픽셀 값으로 매핑
+const maxWidthMap = {
+  sm: '640px',
+  md: '768px',
+  lg: '1024px',
+  xl: '1280px',
+  '2xl': '1536px',
+};
+
+const maxWidthValue = maxWidthMap[maxWidth];
+---
+
+<div class="container" style={`max-width: ${maxWidthValue}`}>
+  <slot />
+</div>
+
+<style is:global lang="scss">
+  .container {
+    margin: 0 auto;
+    padding: 0 24px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+</style>

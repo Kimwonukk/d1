@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+interface Props extends HTMLAttributes<'div'> {
+  padding?: 'p-0' | 'p-8' | 'p-12' | 'p-16' | 'p-20';
+}
+const { class: className, padding, ...rest } = Astro.props;
+const classLists = ['tab-content', padding || 'p-12-16', className].filter(
+  Boolean
+);
+const _dataTabContent =
+  (rest as HTMLAttributes<'div'>)['data-tab-content'] || '';
+---
+
+<div class={classLists.join(' ')} {...rest} data-tab-content={_dataTabContent}>
+  <slot />
+</div>

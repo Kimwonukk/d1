@@ -1,0 +1,14 @@
+---
+import Accordion, {
+  AccordionItem,
+} from '@/components/ui/Accordion/index.astro';
+---
+
+<Accordion>
+  <AccordionItem as="section" title="Trigger1"> Content1 </AccordionItem>
+  <AccordionItem as="section" title="Trigger2" defaultActive>
+    Content2
+  </AccordionItem>
+  <AccordionItem as="section" title="Trigger3"> Content4 </AccordionItem>
+  <AccordionItem as="section" title="Trigger4"> Content4 </AccordionItem>
+</Accordion>

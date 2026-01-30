@@ -1,18 +1,72 @@
-h2 {
-  font-size: 24px;
-  background: #eee;
-  padding: 16px;
-  position: sticky;
-  top: 0;
-  margin: 12px 0;
+@use "mixins" as *;
+
+.guide-layout {
+  display: flex;
+
+  .guide-left {
+    & > h2 {
+      @include typo-xl-bold;
+      background: #eefefe;
+      padding: 14px;
+    }
+
+    width: 240px;
+    height: 100vh;
+
+    .guide-left-list {
+      button {
+        @include typo-md-medium;
+        width: 100%;
+        text-align: left;
+        padding: 10px;
+
+        &.active {
+          background: #f4e696;
+        }
+      }
+    }
+  }
+
+  .guide-right {
+    width: calc(100% - 240px);
+    height: 100vh;
+    overflow: auto;
+    overflow-x: hidden;
+
+    .sub-comment {
+      @include typo-sm-medium;
+      color: var(--color-black-200);
+      margin-top: var(--space-sm);
+      margin-bottom: var(--space-xs);
+    }
+  }
+
+  .section-category {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+
+    & > h2 {
+      font-size: 24px;
+      background: #eee;
+      padding: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+  }
 }
-.base_section {
+
+.base-section {
   h3 {
     font-size: 20px;
     padding: 12px 20px;
     color: #1a1a1a;
   }
 }
+
 .copy {
   text-indent: -9999px;
   display: inline-block;
@@ -21,44 +75,51 @@ h2 {
   background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.2061 4.00488C18.3194 4.11211 20 5.85996 20 8V16L19.9951 16.2061C19.8879 18.3194 18.14 20 16 20H8C5.79086 20 4 18.2091 4 16V8C4 5.79086 5.79086 4 8 4H16L16.2061 4.00488ZM8 6C6.89543 6 6 6.89543 6 8V16C6 17.1046 6.89543 18 8 18H16C17.1046 18 18 17.1046 18 16V8C18 6.89543 17.1046 6 16 6H8ZM12 0C12.5523 0 13 0.447715 13 1C13 1.55228 12.5523 2 12 2H5C3.34315 2 2 3.34315 2 5V12C2 12.5523 1.55228 13 1 13C0.447715 13 0 12.5523 0 12V5C0 2.23858 2.23858 0 5 0H12Z' fill='black'/%3E%3C/svg%3E%0A");
   background-size: cover;
 }
-.token_code {
+
+.token-code {
   display: flex;
   flex-wrap: wrap;
-  // gap: 8px;
   width: calc(100% - 32px);
   margin: 0 auto;
 
   $li-gap: 8px;
   row-gap: $li-gap;
+
   & > li {
     flex: 0 0 calc((100% - #{$li-gap * 2}) / 3);
     box-sizing: border-box;
+
     // width: 33%;
-    box-shadow: 0px 4px 4px 0 #aaa;
+    box-shadow: 0 4px 4px 0 #aaa;
     border-radius: $li-gap;
     padding: $li-gap;
+
     &:not(:nth-child(3n + 3)) {
       margin-right: $li-gap;
     }
   }
 
-  .token_code_list {
+  .token-code-list {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     &.half {
       > * {
         flex: 0 0 calc(50% - 10px);
         justify-content: space-between;
       }
     }
-    .token_code_box {
+
+    .token-code-box {
       width: 40px;
       height: 40px;
+      border: 1px solid #aaa;
+
       span {
-        color: white;
+        color: #fff;
         text-shadow:
           -1px -1px 0 #000,
           1px -1px 0 #000,
@@ -67,9 +128,10 @@ h2 {
       }
     }
 
-    .token_code_content {
+    .token-code-content {
       display: flex;
       gap: 8px;
+
       .codes {
         display: flex;
         flex-direction: column;
@@ -78,19 +140,23 @@ h2 {
 
         span {
           text-align: left;
+
           &:first-child {
             font-size: 16px;
           }
+
           &:last-child {
             font-size: 14px;
             color: #666;
           }
         }
+
         & > ul {
           display: flex;
           flex-direction: column;
           gap: 4px;
           align-items: flex-start;
+
           li {
             color: #666;
           }
@@ -100,23 +166,27 @@ h2 {
   }
 }
 
-.space_tokens {
+.space-tokens {
   display: flex;
   flex-wrap: wrap;
-  // gap: 8px;
   width: calc(100% - 32px);
   margin: 0 auto;
+
   $li-gap: 8px;
+
   & > li {
     flex: 0 0 calc((100% - #{$li-gap * 2}) / 3);
     box-sizing: border-box;
+
     // width: 33%;
-    box-shadow: 0px 4px 4px 0 #aaa;
+    box-shadow: 0 4px 4px 0 #aaa;
     border-radius: $li-gap;
     padding: 16px 8px;
+
     &:not(:nth-child(3n + 3)) {
       margin-right: $li-gap;
     }
+
     button {
       display: flex;
       justify-content: space-between;
@@ -127,6 +197,7 @@ h2 {
         &:first-child {
           font-size: 16px;
         }
+
         &:last-child {
           font-size: 14px;
           color: #666;
@@ -135,3 +206,151 @@ h2 {
     }
   }
 }
+
+// CODE VIEWER
+
+.astro-code-viewer {
+  /* border: 1px solid #333;
+    border-radius: 8px; */
+  margin-bottom: 32px;
+  overflow: hidden;
+  background-color: #1e1e1e;
+
+  .preview {
+    width: 100%;
+
+    // min-height: 120px;
+    border: none;
+    background: #fff;
+
+    /* Keep preview light or neutral */
+    box-sizing: border-box;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+
+    &:first-child {
+      padding: 12px 0;
+    }
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 12px 16px;
+    background-color: #252526;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #1e1e1e;
+  }
+
+  .control-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .control-item label {
+    color: #969696;
+    font-size: 13px;
+  }
+
+  .control-item select {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+
+  .guide-tabs {
+    display: flex;
+    background-color: #252526;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #1e1e1e;
+  }
+
+  .guide-tabs button {
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #969696;
+    font-size: 14px;
+    transition:
+      color 0.2s,
+      background-color 0.2s;
+  }
+
+  .guide-tabs button:hover {
+    color: #fff;
+    background-color: #2d2d2d;
+  }
+
+  .guide-tabs button.active {
+    background: #0d1117;
+
+    /* match github-dark bg approx */
+    color: #fff;
+    border-top: 2px solid #4a9eff;
+
+    /* Accent color */
+  }
+
+  pre {
+    padding: 12px;
+  }
+
+  pre {
+    margin: 0;
+    padding: 16px;
+    overflow: auto;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: #0d1117 !important;
+
+    /* Ensure background matches theme if not exact */
+    border-radius: 0 0 8px 8px;
+
+    /* Unused legacy styles kept for safety but commented out or minimized if needed. 
+         Keeping original codeLabel styles just in case they are used via slots/global context 
+         though they don't appear in the template. */
+
+    pre[data-ke-type="codeblock"] {
+      margin: -4.5px 0 0 -1px;
+      padding: 0;
+      line-height: 1.2;
+    }
+
+    .astro-code-viewer .token-tag {
+      color: #7ee787;
+
+      /* Greenish */
+    }
+
+    .astro-code-viewer .token-attr {
+      color: #79c0ff;
+
+      /* Blueish */
+    }
+
+    .astro-code-viewer .token-string {
+      color: #a5d6ff;
+
+      /* Light Blue */
+    }
+
+    .astro-code-viewer .token-punctuation {
+      color: #c9d1d9;
+
+      /* Gray/White */
+    }
+  }
+}
+
+/* Override Code component default output styles if needed or add layout constraints */

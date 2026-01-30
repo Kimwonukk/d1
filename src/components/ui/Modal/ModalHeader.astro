@@ -1,0 +1,9 @@
+---
+const { tabindex, class: className, ...rest } = Astro.props;
+let _tabindex = tabindex || 0;
+let classLists = ['modal-header', className];
+---
+
+<h2 tabindex={_tabindex} class={classLists.join(' ')} {...rest}>
+  <slot />
+</h2>

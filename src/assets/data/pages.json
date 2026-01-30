@@ -1,0 +1,26 @@
+{
+  "pages": [
+    {
+      "id": "ta-0000",
+      "title": "카테고리A / 페이지1",
+      "path": "/kr/ta/ta-0000",
+      "author": "김규연",
+      "status": "progress"
+    },
+    {
+      "id": "tb-1001",
+      "title": "카테고리B / 페이지2",
+      "path": "/kr/tb/tb-1001",
+      "author": "김규연",
+      "status": "progress"
+    },
+    {
+      "id": "tc-1001",
+      "title": "카테고리C / 페이지3",
+      "path": "/kr/tc/tc-1001",
+      "author": "김규연",
+      "status": "test"
+    }
+  ],
+  "generated": "2026-01-30T09:03:07.525Z"
+}

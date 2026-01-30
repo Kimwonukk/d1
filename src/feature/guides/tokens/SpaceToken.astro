@@ -1,0 +1,30 @@
+---
+import data from '@/assets/data/token.json';
+import { getObjectToArray, type ValueData } from '@/scripts/utils/objectUtil';
+const spaceToken = (): Array<ValueData> => {
+  const temp = getObjectToArray(data?.global?.space);
+  return temp;
+};
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<h2>Space Tokens</h2>
+
+<ul class="space-tokens">
+  {
+    spaceToken().map((value) => {
+      return (
+        <li>
+          <button type="button" class="token-code-content">
+            <span>
+              <span class="css-token">--space-{value.name}</span>
+              <i class="copy">복사하기</i>
+            </span>
+            <span>{value.value}</span>
+          </button>
+        </li>
+      );
+    })
+  }
+</ul>

@@ -1,0 +1,232 @@
+---
+import { Code } from 'astro:components';
+
+const {
+  component: Component, // imported Astro component
+  sourcePath, // .astro file path (string)
+  js,
+  props = {}, // preview props (can be object or array of objects)
+  controls = {}, // interactive controls definition
+  codeSnippet, // Custom code snippet to display
+} = Astro.props;
+
+// 1. 컴포넌트 이름 추출 (sourcePath에서 파일명만 가져옴)
+let componentName =
+  sourcePath?.split('/').pop()?.replace('.astro', '') || 'Component';
+componentName = componentName.charAt(0).toUpperCase() + componentName.slice(1);
+
+// Normalize props to array
+const propsList = Array.isArray(props) ? props : [props];
+
+// 2. Props를 문자열로 변환하는 함수
+const generatePropsString = (props: Record<string, unknown>) => {
+  const { children, ...rest } = props;
+  const propsStr = Object.entries(rest)
+    .map(([key, value]) => {
+      if (typeof value === 'string') return `${key}="${value}"`;
+      if (typeof value === 'boolean') return value ? key : `${key}={false}`;
+      return `${key}={${JSON.stringify(value)}}`;
+    })
+    .join(' ');
+
+  return { propsStr, children };
+};
+
+// 3. 최종 코드 조각 생성 (codeSnippet이 없으면 자동 생성)
+const generatedCode = propsList
+  .map((p) => {
+    const { propsStr, children } = generatePropsString(p);
+    return `<${componentName} ${propsStr}${children ? `>\n${children}\n</${componentName}>` : '/>'}`;
+  })
+  .join('\n');
+
+let code = codeSnippet || generatedCode;
+
+try {
+  const prettier = await import('prettier');
+  const pluginAstro = await import('prettier-plugin-astro');
+  code = await prettier.format(code, {
+    parser: 'astro',
+    plugins: [pluginAstro.default || pluginAstro],
+    htmlWhitespaceSensitivity: 'ignore',
+  });
+} catch (e) {
+  console.error('Prettier formatting failed:', e);
+}
+
+const controlKeys = Object.keys(controls);
+const initialProps = propsList[0] || {};
+---
+
+<section class="astro-code-viewer">
+  <!-- Preview -->
+  <div
+    class={`preview ${propsList.length && propsList.length > 1 ? 'flex' : ''}`}
+    id="preview-wrapper"
+  >
+    {
+      propsList.map((p) => {
+        const { children, ...rest } = p;
+        return children ? (
+          <Component {...rest}>
+            <Fragment set:html={children} />
+          </Component>
+        ) : (
+          <Component {...rest} />
+        );
+      })
+    }
+  </div>
+
+  <!-- Controls -->
+  {
+    controlKeys.length > 0 && (
+      <div class="controls">
+        {controlKeys.map((key) => (
+          <div class="control-item">
+            <label for={`control-${key}`}>{key}</label>
+            {Array.isArray(controls[key]) ? (
+              <select id={`control-${key}`} data-key={key}>
+                <option value="" disabled>
+                  Select {key}
+                </option>
+                {controls[key].map((option: string) => (
+                  <option
+                    value={option}
+                    selected={initialProps[key] === option}
+                  >
+                    {option}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type="text"
+                id={`control-${key}`}
+                data-key={key}
+                value={initialProps[key] || ''}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  <!-- 🔹 Tabs -->
+  <div class="guide-tabs">
+    <button data-tab="html" class="active">HTML</button>
+    {js && <button data-tab="js">JS</button>}
+  </div>
+
+  <!-- 🔹 Code -->
+  <div class="code-wrapper" id="code-block-wrapper">
+    <Code code={code} lang="html" theme="github-dark" data-code="html" />
+  </div>
+  {js && <Code code={js} lang="js" theme="dark-plus" data-code="js" hidden />}
+</section>
+
+<script define:vars={{ initialProps, controls }}>
+  document.querySelectorAll('.astro-code-viewer').forEach((root) => {
+    // Tab Logic
+    const tabs = root.querySelectorAll('.guide-tabs [data-tab]');
+    const blocks = root.querySelectorAll('pre');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        blocks.forEach((b) => {
+          b.hidden =
+            b.getAttribute('data-code') !== tab.getAttribute('data-tab');
+        });
+      });
+    });
+
+    // Controls Logic
+    const previewWrapper = root.querySelector('#preview-wrapper');
+    // Select all direct children (component instances) in the wrapper
+    const targetEls = previewWrapper ? Array.from(previewWrapper.children) : [];
+    const codeBlock = root.querySelector('#code-block-wrapper pre code'); // Code block content
+    const selects = root.querySelectorAll('select');
+    const inputs = root.querySelectorAll('input');
+
+    if (targetEls.length > 0 && (selects.length > 0 || inputs.length > 0)) {
+      const currentProps = { ...initialProps };
+
+      const _codeStr = '';
+      const changeTarget = (key, _value) => {
+        const codes = codeBlock.querySelectorAll('.line span');
+        // let temp = -1;
+        const temps = [];
+        const confirm = [];
+
+        codes.forEach((code, idx) => {
+          if (code.textContent.includes(key)) {
+            // temp = idx + 2;
+            temps.push(idx + 2);
+            confirm.push(code);
+          }
+        });
+        return temps;
+      };
+      const allCodeChange = (key, value) => {
+        if (!codeBlock) return;
+        const codes = codeBlock.querySelectorAll('.line span');
+        orders = changeTarget(key);
+        orders.forEach((order) => {
+          codes[order].textContent = `"${value}"`;
+        });
+      };
+      const updateCode = (key, value) => {
+        allCodeChange(key, value);
+        // if (!codeBlock) return;
+        // const codes = codeBlock.querySelectorAll('span');
+        // order = changeTarget(key);
+        // if (order < 0) return;
+        // codes[order].textContent = `"${value}"`;
+      };
+
+      const handleUpdate = (key, value) => {
+        if (!currentProps) return;
+        currentProps[key] = value;
+
+        targetEls.forEach((targetEl) => {
+          if (key === 'children') {
+            targetEl.innerHTML = value;
+          } else {
+            // Class Handling
+            if (controls[key] && Array.isArray(controls[key])) {
+              // It's a list-based control, so it likely maps to classes
+              controls[key].forEach((opt) => targetEl.classList.remove(opt));
+              targetEl.classList.add(value);
+            }
+            // Attribute Handling
+            targetEl.setAttribute(key, value);
+          }
+        });
+        updateCode(key, value);
+      };
+
+      // Selects: Use 'change' event for reliable dropdown updates
+      selects.forEach((select) => {
+        select.addEventListener('change', (e) => {
+          const key = select.getAttribute('data-key');
+          const value = e.target.value;
+          handleUpdate(key, value);
+        });
+      });
+
+      // Inputs: Use 'input' event for real-time text updates
+      const textInputs = root.querySelectorAll('input[type="text"]');
+      textInputs.forEach((input) => {
+        input.addEventListener('input', (e) => {
+          const key = input.getAttribute('data-key');
+          const value = e.target.value;
+          handleUpdate(key, value);
+        });
+      });
+    }
+  });
+</script>

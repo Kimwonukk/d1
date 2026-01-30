@@ -1,0 +1,71 @@
+@mixin typo-md-regular {
+  font-weight: 400;
+  font-size: var(--font-size-md);
+  line-height: var(--font-lineheight-md);
+}
+
+@mixin typo-md-medium {
+  font-weight: 500;
+  font-size: var(--font-size-md);
+  line-height: var(--font-lineheight-md);
+}
+
+@mixin typo-md-bold {
+  font-weight: 700;
+  font-size: var(--font-size-md);
+  line-height: var(--font-lineheight-md);
+}
+
+@mixin typo-sm-regular {
+  font-weight: 400;
+  font-size: var(--font-size-sm);
+  line-height: var(--font-lineheight-sm);
+}
+
+@mixin typo-sm-medium {
+  font-weight: 500;
+  font-size: var(--font-size-sm);
+  line-height: var(--font-lineheight-sm);
+}
+
+@mixin typo-sm-bold {
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  line-height: var(--font-lineheight-sm);
+}
+
+@mixin typo-lg-reqular {
+  font-weight: 400;
+  font-size: var(--font-size-lg);
+  line-height: var(--font-lineheight-lg);
+}
+
+@mixin typo-lg-medium {
+  font-weight: 500;
+  font-size: var(--font-size-lg);
+  line-height: var(--font-lineheight-lg);
+}
+
+@mixin typo-lg-bold {
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+  line-height: var(--font-lineheight-lg);
+}
+
+@mixin typo-xl-regular {
+  font-weight: 700;
+  font-size: var(--font-size-xl);
+  line-height: var(--font-lineheight-xl);
+}
+
+@mixin typo-xl-medium {
+  font-weight: 500;
+  font-size: var(--font-size-xl);
+  line-height: var(--font-lineheight-xl);
+}
+
+@mixin typo-xl-bold {
+  font-weight: 700;
+  font-size: var(--font-size-xl);
+  line-height: var(--font-lineheight-xl);
+}

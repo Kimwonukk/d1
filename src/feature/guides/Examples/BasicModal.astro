@@ -1,0 +1,16 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Modal from '@/components/ui/Modal/index.astro';
+---
+
+<Button type="button" variant="outline" size="sm" data-modal-trigger="modal-1"> 팝업열기 </Button>
+
+<Modal id="modal-1" title="Modal Title" modalType="default">
+  <div class="modal-content">
+    <p>Modal content goes here.</p>
+  </div>
+  <div class="modal-footer right">
+    <Button variant="secondary" size="md" type="button" data-modal-close>취소</Button>
+    <Button variant="primary" size="md" type="button" data-modal-close>확인</Button>
+  </div>
+</Modal>

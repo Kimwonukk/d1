@@ -1,19 +1,59 @@
 ---
-// src/layouts/BaseLayout.astro
-const { title } = Astro.props
+import Header from '@layout/Header.astro';
+import Footer from '@layout/Footer.astro';
+import Container from '@structure/Container.astro';
+import type { Meta } from '@scripts/type/meta';
+import Base from './Base.astro';
+
+interface Props {
+  pageMeta?: Meta;
+}
+
+const { pageMeta } = Astro.props;
+
+// title 결정
+const pageTitle = pageMeta?.title || 'Static';
 ---
 
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <title>{title}</title>
-    <link rel="stylesheet" href="/css/main.css" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="프론트엔드 개발자 포트폴리오" />
-  </head>
+<Base>
+  <title>{pageTitle} - Static</title>
 
-  <body>
-    <slot />
-  </body>
-</html>
+  <Fragment slot="head"></Fragment>
+
+  <Container slot="body">
+    <Header />
+    <main class="main">
+      <h1 class="page-title">{pageTitle}</h1>
+      <div class="contents">
+        <slot />
+      </div>
+    </main>
+    <Footer />
+  </Container>
+</Base>
+
+<style is:global lang="scss">
+  @use '../styles/mixins' as *;
+
+  .main {
+    padding: 60px 0 100px;
+    min-height: calc(
+      100vh - 64px - 140px
+    ); // viewport - header - footer approximate
+
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    .page-title {
+      @include typo-xl-bold;
+
+      color: var(--color-black-900);
+      margin: 0;
+    }
+
+    .contents {
+      flex: 1;
+    }
+  }
+</style>

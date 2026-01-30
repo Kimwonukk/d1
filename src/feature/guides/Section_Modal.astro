@@ -1,0 +1,36 @@
+---
+import ExampleCodeViewer from '@/components/code/ExampleCodeViewer.astro';
+import BasicModal from './Examples/BasicModal.astro';
+import BasicModalCode from './Examples/BasicModal.astro?raw';
+
+interface Props {
+  id?: string;
+  class?: string;
+}
+
+const { id, class: className } = Astro.props;
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<div id={id} class={className}>
+  <h2>Modal</h2>
+  <ExampleCodeViewer
+    component={BasicModal}
+    sourcePath="src/feature/guides/Examples/BasicModal.astro"
+    code={BasicModalCode}
+    props={{
+      id: 'modal-1',
+      modalType: 'default',
+    }}
+    controls={{
+      modalType: ['default', 'bottomSheet', 'full'],
+    }}
+    js={`
+    // Modal이 close 될 때 event Listener를 통해 핸들링이 가능합니다.
+    document.querySelector('#modal-1')?.addEventListener('modal-close', () => {
+      console.log('Modal Closed')
+    });
+    `}
+  />
+</div>

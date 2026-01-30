@@ -1,0 +1,50 @@
+---
+import ExampleCodeViewer from '@/components/code/ExampleCodeViewer.astro';
+import BasicToast from './Examples/BasicToast.astro';
+import BasicToastCode from './Examples/BasicToast.astro?raw';
+
+interface Props {
+  id?: string;
+  class?: string;
+}
+
+const { id, class: className } = Astro.props;
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<div id={id} class={className}>
+  <h2>Toast</h2>
+  <ExampleCodeViewer
+    component={BasicToast}
+    code={BasicToastCode}
+    js={` 
+/*
+  Toast.show(message, variant, size, animate, duration, hasClosing)
+  
+  message: string,
+  variant?: 'primary' | 'secondary' | 'outline' = 'primary',
+  size?: 'sm' | 'md' | 'lg' = 'md',
+  animate?: boolean = true,
+  duration?: number = 3000,
+  hasClosing?: boolean = false
+
+  return Promise<void>
+*/ 
+
+
+/*
+- 전역 애니메이션 적용 (매개 변수 animate 값이 우선함) -
+Toast.animate = true; 
+
+- 토스트 최대 누전 갯수 -
+Toast.maxLen = 4
+*/
+
+
+Toast.show('Toast message').then((response) => {
+  console.log(response);
+}); 
+`}
+  />
+</div>

@@ -1,0 +1,28 @@
+---
+import ExampleCodeViewer from '@/components/code/ExampleCodeViewer.astro';
+import BasicTab from './Examples/BasicTab.astro';
+import BasicTabCode from './Examples/BasicTab.astro?raw';
+
+interface Props {
+  id?: string;
+  class?: string;
+}
+
+const { id, class: className } = Astro.props;
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<div id={id} class={className}>
+  <h2>Tab</h2>
+  <ExampleCodeViewer
+    component={BasicTab}
+    code={BasicTabCode}
+    js={` 
+    /* 
+    비동기로 탭이 추가되는 경우 initTab()을 호출해야 합니다.
+    */
+    initTab();
+    `}
+  />
+</div>

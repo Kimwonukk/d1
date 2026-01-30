@@ -1,0 +1,60 @@
+@use '../mixins' as *;
+
+.tab {
+  width: 100%;
+
+  &>.tab-controls {
+    &.hug {
+      .tab-trigger {
+        width: 100%;
+        box-sizing: content-box;
+      }
+    }
+  }
+
+  .tab-controls {
+    position: relative;
+    display: flex;
+
+    &.underline {
+      .tab-trigger {
+        padding: 8px 12px;
+        @include typo-md-medium;
+        border: 1px solid transparent;
+        color: var(--color-black-300);
+
+        &.active {
+          border-bottom: 1px solid var(--color-black-100);
+          @include typo-md-bold;
+          color: var(--color-black-400);
+        }
+      }
+    }
+
+    &.rounded {
+      .tab-trigger {
+        border-radius: 16px;
+        box-sizing: border-box;
+        border: 1px solid var(--color-black-100);
+        color: var(--color-black-400);
+        @include typo-sm-medium;
+        padding: var(--space-2xs) var(--space-xs);
+
+        &.active {
+          // @include typo-sm-bold;
+          box-shadow: var(--shadow-drop-b300);
+          border-color: var(--color-black-50);
+          color: var(--color-primary-normal-active);
+        }
+      }
+    }
+  }
+}
+
+.tab-content {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}

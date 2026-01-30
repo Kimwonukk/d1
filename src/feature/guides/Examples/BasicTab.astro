@@ -1,0 +1,38 @@
+---
+import Tab, { TabContent, TabControls } from '@/components/ui/Tab/index.astro';
+---
+
+<Tab>
+  <TabControls triggers={['Tab 1', 'Tab 2', 'Tab 3']} />
+  <TabContent> Content 1 </TabContent>
+  <TabContent>
+    <Tab>
+      <TabControls
+        layoutType="free"
+        variant="rounded"
+        gap="12"
+        triggers={[
+          { label: 'Tab 2-1', id: 'sub-tab1' },
+          { label: 'Tab 2-2', id: 'sub-tab2' },
+        ]}
+      />
+    </Tab>
+    <TabContent data-tab-content="sub-tab1">
+      Content 2-1<br /><br />
+      위 탭 컨텐츠는 Tab과 Content 부분이 분리되어 있습니다.<br />
+      레이아웃을 이유로 Tab 외부에 컨텐츠 영역을 분리 하고자 하면<br />
+      TabTrigger 와 TabContent 의 연결점을 이어주는 유니크한 아이디를 참조해야 합니다.<br
+      /><br />
+      * 예제 참조
+    </TabContent>
+    <TabContent data-tab-content="sub-tab2">
+      Content 2-2<br /><br />
+      위 탭 컨텐츠는 Tab과 Content 부분이 분리되어 있습니다.<br />
+      레이아웃을 이유로 Tab 외부에 컨텐츠 영역을 분리 하고자 하면<br />
+      TabTrigger 와 TabContent 의 연결점을 이어주는 유니크한 아이디를 참조해야 합니다.<br
+      /><br />
+      * 예제 참조
+    </TabContent>
+  </TabContent>
+  <TabContent> Content 3 </TabContent>
+</Tab>

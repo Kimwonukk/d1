@@ -1,0 +1,64 @@
+---
+import AstroCodeViewer from '@/components/code/AstroCodeViewer.astro';
+import DropDown from '@/components/ui/DropDown/index.astro';
+
+interface Props {
+  id?: string;
+  class?: string;
+}
+
+const { id, class: className } = Astro.props;
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<div id={id} class={className}>
+  <h2>DropDown</h2>
+  <AstroCodeViewer
+    component={DropDown}
+    sourcePath="src/components/ui/DropDown.astro"
+    js="console.log('js');"
+    props={[
+      {
+        variant: 'primary',
+        size: 'md',
+        align: 'bottom-left',
+        lists: [
+          ['List1-1', 'List1-2', 'List1-3'],
+          ['List2-1', 'List2------------------------------2', 'List2-3'],
+        ],
+        label: `DropDown 2Depth`,
+      },
+      {
+        variant: 'primary',
+        size: 'md',
+        align: 'bottom-left',
+        label: `Disabled`,
+        disabled: true,
+      },
+    ]}
+    controls={{
+      variant: ['primary', 'secondary', 'outline'],
+      size: ['sm', 'md', 'lg'],
+      align: [
+        'bottom-left',
+        'bottom-center',
+        'bottom-right',
+        'bottom-hug',
+        'top-left',
+        'top-center',
+        'top-right',
+        'top-hug',
+        'off-right',
+        'dynamic',
+        'dynamic-hug',
+      ],
+    }}
+    js={` 
+    /* 
+    비동기로 탭이 추가되는 경우 initDropdown()을 호출해야 합니다.
+    */
+    initDropdown();
+    `}
+  />
+</div>

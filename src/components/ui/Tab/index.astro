@@ -1,0 +1,19 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+export { default as TabControls } from './TabControls.astro';
+export { default as TabTrigger } from './TabTrigger.astro';
+export { default as TabContent } from './TabContent.astro';
+
+interface Props extends HTMLAttributes<'div'> {
+  animation?: boolean;
+}
+const { animation = true, class: className, ...rest } = Astro.props;
+
+const classLists = ['tab', animation && 'animation', className].filter(Boolean);
+---
+
+<div class={classLists.join(' ')} {...rest} data-tab>
+  <slot name="controls" />
+  <slot />
+</div>

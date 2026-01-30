@@ -1,29 +1,31 @@
 ---
 interface Props {
-  name: string
-  value: Array<{ name: string; value: string | object }>
+  name: string;
+  value: Array<{ name: string; value: string | object }>;
 }
 const toTokenName = (name: string) => {
-  let temp = name
-  if (!temp.includes("{")) {
-    return temp
+  let temp = String(name);
+  if (!temp.includes('{')) {
+    return temp;
   }
-  temp = temp.replace("{", "").replace("}", "")
-  temp = temp.split(".").join("-")
-  return `--${temp}`
-}
-const { name, value } = Astro.props // TypeScript 권장
+  temp = temp.replace('{', '').replace('}', '');
+  temp = temp.split('.').join('-');
+  return `--${temp}`;
+};
+const { name, value } = Astro.props; // TypeScript 권장
 ---
 
 <section>
   <h3>{name}</h3>
-  <ul class="token_code">
+  <ul class="token-code">
     {
       value.map((value) => (
         <li>
-          <div class="token_code_list">
-            <p class={`typo-${name}-${value.name}`}>{`typo-${name}-${value.name}`}</p>
-            <button type="button" class="token_code_content">
+          <div class="token-code-list">
+            <p
+              class={`typo-${name}-${value.name}`}
+            >{`typo-${name}-${value.name}`}</p>
+            <button type="button" class="token-code-content">
               <div class="codes">
                 <span>
                   <span class="css-token">{`@include typo-${name}-${value.name};`}</span>

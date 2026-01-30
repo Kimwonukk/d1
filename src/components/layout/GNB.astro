@@ -1,0 +1,44 @@
+---
+// GNB 메뉴 항목 (하드코딩)
+const menuItems = [
+  { id: 'tb', title: '페이지1', path: '/kr/ta/ta-0000' },
+  { id: 'tb', title: '페이지2', path: '/kr/tb/tb-1001' },
+  { id: 'tc', title: '페이지3', path: '/kr/tc/tc-1001' },
+  { id: 'guides', title: '가이드', path: '/guides' },
+];
+---
+
+<nav class="gnb">
+  {
+    menuItems.map((item) => (
+      <a href={item.path} class="gnb-link">
+        {item.title}
+      </a>
+    ))
+  }
+</nav>
+
+<style is:global lang="scss">
+  @use '../../styles/mixins' as *;
+  .gnb {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+
+    .gnb-link {
+      @include typo-sm-medium;
+      color: var(--color-black-600);
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--color-primary-normal);
+      }
+
+      &.active {
+        color: var(--color-primary-normal);
+        font-weight: 700;
+      }
+    }
+  }
+</style>

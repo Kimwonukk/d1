@@ -1,0 +1,42 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'img'> {
+  src: string;
+  type?: 'div' | 'img';
+}
+
+const { src: initialSrc, type = 'div', class: className, ...attrs } = Astro.props;
+
+let finalSrc = initialSrc;
+
+// 스마트 경로 로직
+// /, http, https, data: 로 시작하지 않으면 /assets/icons/ 를 자동으로 붙임
+const isExternal = initialSrc.startsWith('http') || initialSrc.startsWith('data:');
+const isRootRelative = initialSrc.startsWith('/');
+
+if (!isExternal && !isRootRelative) {
+  finalSrc = `/assets/icons/${initialSrc}`;
+}
+
+// div 모드일 때 사용할 배경 이미지 변수
+const iconUrl = `url('${finalSrc}')`;
+---
+
+{
+  type === 'img' ? (
+    <img src={finalSrc} class={className} {...attrs} />
+  ) : (
+    <div class:list={['icon-bg', className]} {...attrs} />
+  )
+}
+
+<style lang="scss" define:vars={{ 'icon-url': iconUrl }}>
+  .icon-bg {
+    background-image: var(--icon-url);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: inline-block;
+  }
+</style>

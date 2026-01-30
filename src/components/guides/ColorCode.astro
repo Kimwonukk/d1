@@ -1,26 +1,29 @@
 ---
 interface Props {
-  name: string
-  value: Array<{ name: string; value: string | object }>
+  name: string;
+  value: Array<{ name: string; value: string | object }>;
 }
-const { name, value } = Astro.props // TypeScript 권장
+const { name, value } = Astro.props; // TypeScript 권장
 ---
 
 <section>
   <h3>{name}</h3>
-  <ul class="token_code">
+  <ul class="token-code">
     {
       value.map((value) => (
         <li>
-          <div class="token_code_list">
-            <div class="token_code_box" style={`background-color: ${value.value}`} />
-            <button type="button" class="token_code_content">
+          <div class="token-code-list">
+            <div
+              class="token-code-box"
+              style={`background-color: ${value.value}`}
+            />
+            <button type="button" class="token-code-content">
               <div class="codes">
                 <span>
                   <span class="css-token">{`--color-${name}-${value.name}`}</span>
                   <i class="copy">복사하기</i>
                 </span>
-                <span class="token_code_value">{value.value}</span>
+                <span class="token-code-value">{value.value}</span>
               </div>
             </button>
           </div>

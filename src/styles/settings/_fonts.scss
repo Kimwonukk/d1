@@ -1,0 +1,56 @@
+// Wanted Sans 웹폰트 정의
+@font-face {
+  font-family: 'Wanted Sans';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/assets/fonts/WantedSans-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Wanted Sans';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('/assets/fonts/WantedSans-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Wanted Sans';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('/assets/fonts/WantedSans-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Wanted Sans';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/assets/fonts/WantedSans-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Wanted Sans';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url('/assets/fonts/WantedSans-ExtraBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Wanted Sans';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('/assets/fonts/WantedSans-Black.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Wanted Sans';
+  font-weight: 950;
+  font-style: normal;
+  font-display: swap;
+  src: url('/assets/fonts/WantedSans-ExtraBlack.woff2') format('woff2');
+}

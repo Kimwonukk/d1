@@ -1,0 +1,36 @@
+---
+import Button from '@/components/ui/Button.astro';
+---
+
+<Button type="button" variant="outline" size="sm" id="call_alert"
+  >Alert 열기</Button
+>
+<Button type="button" variant="outline" size="sm" id="call_confirm"
+  >ConFirm 열기</Button
+>
+<script is:inline>
+  document.querySelector('#call_alert')?.addEventListener('click', () => {
+    Dialog.Alert({
+      title: 'Alert',
+      message: 'Alert message',
+      btnLabel: 'OK',
+    }).then((res) => {
+      console.log('result', res); // eslint-disable-line no-console
+    });
+  });
+  document.querySelector('#call_confirm')?.addEventListener('click', () => {
+    Dialog.Confirm({
+      title: 'Confirm',
+      message: 'Confirm message',
+      btnLabel: 'OK',
+    }).then((res) => {
+      if (res === true) {
+        Dialog.Confirm({
+          title: 'Confirm2',
+          message: 'Confirm message2',
+          btnLabel: 'OK',
+        });
+      }
+    });
+  });
+</script>

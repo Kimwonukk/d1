@@ -1,0 +1,55 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import TabTrigger from './TabTrigger.astro';
+
+type TriggerObjType = {
+  label: string;
+  id?: string;
+};
+type TriggerType = TriggerObjType | string;
+
+interface Props extends HTMLAttributes<'div'> {
+  layoutType?: 'hug' | 'free';
+  variant?: 'underline' | 'rounded';
+  triggers: TriggerType[];
+  gap?: '0' | '4' | '8' | '12' | '16' | '20' | '24';
+}
+
+const {
+  class: className,
+  layoutType = 'hug',
+  variant = 'underline',
+  triggers,
+  gap,
+  ...rest
+} = Astro.props;
+
+const _gap = gap ? `gap-${gap}` : undefined;
+const classLists = [
+  'tab-controls',
+  _gap,
+  layoutType,
+  variant,
+  className,
+].filter(Boolean);
+const getObjType = (target: TriggerType) => {
+  if (typeof target === 'string') {
+    return { label: target };
+  }
+  return target;
+};
+---
+
+<div class={classLists.join(' ')} {...rest} role="tablist" data-tab-controls="">
+  {
+    triggers.map((trigger) => (
+      <TabTrigger
+        data-tab-trigger=""
+        id={getObjType(trigger).id && getObjType(trigger).id}
+      >
+        {getObjType(trigger).label}
+      </TabTrigger>
+    ))
+  }
+  <slot />
+</div>

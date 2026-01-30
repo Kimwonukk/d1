@@ -1,0 +1,169 @@
+---
+import { Code } from 'astro:components';
+import fs from 'node:fs/promises';
+
+const {
+  src,
+  js,
+  code: sourceCode,
+  component,
+  controls = {},
+  props = {},
+} = Astro.props;
+
+let ExampleComponent;
+let code = sourceCode;
+
+// 1️⃣ 예제 Astro 컴포넌트 준비
+if (component) {
+  ExampleComponent = component;
+} else if (src) {
+  ExampleComponent = (await import(src)).default;
+}
+
+// 2️⃣ 예제 Astro 소스 코드 준비
+if (!code && src) {
+  code = await fs.readFile(new URL(src, import.meta.url), 'utf-8');
+}
+
+const propsList = Array.isArray(props) ? props : [props];
+const controlKeys = Object.keys(controls);
+const initialProps = propsList[0] || {};
+---
+
+<section class="astro-code-viewer">
+  <!-- 🔹 Preview -->
+  <div class="preview" id="preview-wrapper">
+    <ExampleComponent />
+  </div>
+  <!-- Controls -->
+  {
+    controlKeys.length > 0 && (
+      <div class="controls">
+        {controlKeys.map((key) => (
+          <div class="control-item">
+            <label for={`control-${key}`}>{key}</label>
+            {Array.isArray(controls[key]) ? (
+              <select id={`control-${key}`} data-key={key}>
+                <option value="" disabled>
+                  Select {key}
+                </option>
+                {controls[key].map((option: string) => (
+                  <option
+                    value={option}
+                    selected={initialProps[key] === option}
+                  >
+                    {option}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type="text"
+                id={`control-${key}`}
+                data-key={key}
+                value={initialProps[key] || ''}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+    )
+  }
+  <!-- 🔹 Tabs -->
+  <div class="guide-tabs">
+    <button data-tab="html" class="active">HTML</button>
+    {js && <button data-tab="js">JS</button>}
+  </div>
+  <div id="code-block-wrapper">
+    <!-- <code>{code}</code> -->
+    <Code code={code} lang="html" theme="dark-plus" data-code="html" />
+  </div>
+  {js && <Code code={js} lang="js" theme="dark-plus" data-code="js" hidden />}
+</section>
+
+<script define:vars={{ controls }}>
+  document.querySelectorAll('.astro-code-viewer').forEach((root) => {
+    // Tab Logic
+    const tabs = root.querySelectorAll('.guide-tabs [data-tab]');
+    const blocks = root.querySelectorAll('pre');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        blocks.forEach((b) => {
+          b.hidden =
+            b.getAttribute('data-code') !== tab.getAttribute('data-tab');
+        });
+      });
+    });
+
+    // Controls Logic
+    const previewWrapper = root.querySelector('#preview-wrapper');
+    // Select all direct children (component instances) in the wrapper
+    const targetEls = previewWrapper ? Array.from(previewWrapper.children) : [];
+    const codeBlock = root.querySelector('#code-block-wrapper pre code'); // Code block content
+    const selects = root.querySelectorAll('select');
+    const inputs = root.querySelectorAll('input');
+
+    if (targetEls.length > 0 && (selects.length > 0 || inputs.length > 0)) {
+      const changeTarget = (key) => {
+        const codes = codeBlock.querySelectorAll('span');
+        let temp = -1;
+
+        codes.forEach((code, idx) => {
+          if (code.textContent.includes(key)) {
+            temp = idx + 2;
+          }
+        });
+        return temp;
+      };
+      const updateCode = (key, value) => {
+        if (!codeBlock) return;
+        const codes = codeBlock.querySelectorAll('span');
+        order = changeTarget(key);
+        if (order < 0) return;
+        codes[order].textContent = `"${value}"`;
+      };
+
+      const handleUpdate = (key, value) => {
+        targetEls.forEach((targetEl) => {
+          if (key === 'children') {
+            targetEl.innerHTML = value;
+          } else {
+            // Class Handling
+            if (controls[key] && Array.isArray(controls[key])) {
+              // It's a list-based control, so it likely maps to classes
+              controls[key].forEach((opt) => targetEl.classList.remove(opt));
+              targetEl.classList.add(value);
+            }
+            // Attribute Handling
+            targetEl.setAttribute(key, value);
+          }
+        });
+        updateCode(key, value);
+      };
+
+      // Selects: Use 'change' event for reliable dropdown updates
+      selects.forEach((select) => {
+        select.addEventListener('change', (e) => {
+          const key = select.getAttribute('data-key');
+          const value = e.target.value;
+          handleUpdate(key, value);
+        });
+      });
+
+      // Inputs: Use 'input' event for real-time text updates
+      const textInputs = root.querySelectorAll('input[type="text"]');
+      textInputs.forEach((input) => {
+        input.addEventListener('input', (e) => {
+          const key = input.getAttribute('data-key');
+          const value = e.target.value;
+          handleUpdate(key, value);
+        });
+      });
+    }
+  });
+</script>

@@ -1,0 +1,20 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'button'> {
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+}
+
+const { variant = 'primary', size = 'md', href, type = 'button', ...rest } = Astro.props;
+
+const Tag = href && href !== '' ? 'a' : 'button';
+---
+
+<Tag class:list={['button', variant, size]} href={href} type={!href ? type : undefined} {...rest}>
+  <slot />
+</Tag>
+
+<style is:global lang="scss"></style>

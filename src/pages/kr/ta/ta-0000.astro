@@ -1,0 +1,80 @@
+---
+import type { Meta } from '@scripts/type/meta';
+
+export const pageMeta: Meta = {
+  id: 'ta-0000',
+  title: '카테고리A / 페이지1',
+  author: '김규연',
+  status: 'progress',
+};
+
+import Layout from '@layouts/Layout.astro';
+import Img from '@ui/Img.astro';
+import Icon from '@ui/Icon.astro';
+---
+
+<Layout pageMeta={pageMeta}>
+  <div class="dummy-content">
+    <h2 class="h2">컴포넌트 기반 이미지 테스트</h2>
+    <p class="p">
+      커스텀 <code>&lt;Img /&gt;</code>와 <code>&lt;Icon /&gt;</code> 컴포넌트를 사용하여
+      경로 관리를 자동화합니다.
+    </p>
+
+    <!-- Img 컴포넌트 예시 -->
+    <div
+      class="image-wrapper"
+      style="margin-bottom: 2rem; border: 1px solid #ddd; padding: 1rem; border-radius: 8px;"
+    >
+      <h3 class="h3 mb-10">1. Img 컴포넌트 (귀여운 고양이)</h3>
+      <Img src="dummy.png" alt="침대 위에 앉아 있는 귀여운 아기 고양이" />
+      <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+        ▲ 새롭게 교체된 1024x1024 크기의 고양이 이미지입니다.
+      </p>
+    </div>
+
+    <!-- Icon 컴포넌트 예시 -->
+    <div
+      class="image-wrapper"
+      style="margin-bottom: 2rem; border: 1px solid #ddd; padding: 1rem; border-radius: 8px;"
+    >
+      <h3 class="h3 mb-10">2. Icon 컴포넌트 (다양한 렌더링 스타일)</h3>
+
+      <div style="display: flex; gap: 2rem; align-items: flex-start;">
+        <div>
+          <p style="margin-bottom: 0.5rem; font-weight: bold;">
+            기본 (div + bg)
+          </p>
+          <Icon
+            src="icon.png"
+            style="width: 50px; height: 50px; border: 1px solid #eee;"
+          />
+        </div>
+
+        <div>
+          <p style="margin-bottom: 0.5rem; font-weight: bold;">type="img"</p>
+          <Icon src="icon.png" type="img" alt="아이콘" width="50" height="50" />
+        </div>
+      </div>
+
+      <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+        ▲ <code>Icon</code>은 기본적으로 <code>div</code>의 배경 이미지로
+        렌더링되며, <code>type="img"</code>를 통해 <code>img</code> 태그로 변경 가능합니다.
+      </p>
+    </div>
+
+    <h2 class="h2">특징</h2>
+    <ul class="p" style="list-style: disc; padding-left: 1.5rem;">
+      <li>파일명만으로 자동 경로 지정 (Img: images/, Icon: icons/)</li>
+      <li>
+        <code>Icon</code>: <code>div</code>(백그라운드) 또는 <code>img</code> 태그
+        선택 가능
+      </li>
+      <li>
+        표준 <code>&lt;img&gt;</code> 및 <code>&lt;div&gt;</code> 속성 지원
+      </li>
+    </ul>
+  </div>
+</Layout>
+
+<style is:global lang="scss"></style>

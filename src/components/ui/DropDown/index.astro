@@ -1,0 +1,136 @@
+---
+export { default as DropDownItem } from './DropDownItem.astro';
+import DropDownItem from './DropDownItem.astro';
+import type { HTMLAttributes } from 'astro/types';
+
+type ObjType = {
+  id?: string;
+  label: string;
+  type?: 'button' | 'submit' | 'reset';
+  href?: string;
+  disabled?: '' | 'true' | 'false' | boolean | undefined;
+};
+type ListType = ObjType | string;
+
+interface Props extends HTMLAttributes<'div'> {
+  variant?: 'primary' | 'secondary' | 'outline';
+  lists?: ListType[][] | ListType[] | string[] | string[][];
+  label?: string;
+  size?: 'sm' | 'md' | 'lg';
+  align?:
+    | 'bottom-left'
+    | 'bottom-center'
+    | 'bottom-right'
+    | 'bottom-hug'
+    | 'top-left'
+    | 'top-center'
+    | 'top-right'
+    | 'top-hug'
+    | 'off-right'
+    | 'dynamic'
+    | 'dynamic-hug';
+  disabled?: '' | 'true' | 'false' | boolean | undefined;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  align = 'dynamic',
+  lists,
+  disabled,
+  label,
+  ...rest
+} = Astro.props;
+
+function insertData(target: ListType[], data: ListType | string): void {
+  if (typeof data === 'string') {
+    target.push({ label: data });
+  } else {
+    target.push(data);
+  }
+}
+
+function getLists() {
+  if (!lists) return [];
+
+  const temps: (ListType | ListType[])[] = [];
+
+  const len = lists.length;
+  for (let i = 0; i < len; i++) {
+    const ele = lists[i] as ListType[] | ListType | string;
+
+    if (Array.isArray(ele)) {
+      const group: ListType[] = [];
+
+      for (let j = 0; j < ele.length; j++) {
+        insertData(group, ele[j]);
+      }
+
+      temps[i] = group;
+    } else {
+      insertData(temps as ListType[], ele);
+    }
+  }
+
+  return temps;
+}
+
+const _disabled = disabled === 'true' || disabled === true || disabled === '';
+const castingList = (value: ListType | string) => {
+  if (typeof value === 'string') {
+    return { label: value };
+  }
+  return value;
+};
+---
+
+<div class:list={['drop-down', variant, size, align]} data-dropdown="">
+  <button
+    type="button"
+    class:list={['drop-down-trigger']}
+    data-dropdown-trigger=""
+    {...rest}
+    aria-haspopup="menu"
+    aria-expanded="false"
+    disabled={_disabled}
+  >
+    {label}
+  </button>
+  {
+    getLists().length > 0 ? (
+      <div role="menu" class:list={['drop-down-list']} data-dropdown-list="">
+        <ul>
+          {getLists()?.map((list: ListType[] | ListType) => (
+            <li role="menuitem">
+              {!Array.isArray(list) ? (
+                <DropDownItem
+                  id={castingList(list).id || undefined}
+                  type={castingList(list).type || 'button'}
+                  href={castingList(list).href || undefined}
+                  disabled={castingList(list).disabled || undefined}
+                >
+                  {castingList(list).label}
+                </DropDownItem>
+              ) : (
+                <ul>
+                  {(list as ListType[])?.map((list2: ListType) => (
+                    <DropDownItem
+                      id={castingList(list2).id || undefined}
+                      type={castingList(list2).type || 'button'}
+                      href={castingList(list2).href || undefined}
+                      disabled={castingList(list2).disabled || undefined}
+                    >
+                      {castingList(list2).label}
+                    </DropDownItem>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ) : (
+      <slot />
+    )
+  }
+</div>

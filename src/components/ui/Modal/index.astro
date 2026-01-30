@@ -1,0 +1,43 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import ModalHeader from './ModalHeader.astro';
+
+interface Props extends HTMLAttributes<'div'> {
+  open?: boolean;
+  overlay?: boolean;
+  animation?: boolean;
+  title?: string;
+  modalType?: 'default' | 'bottomSheet' | 'full';
+}
+
+const {
+  role = 'dialog',
+  open = false,
+  animation = true,
+  overlay = true,
+  class: className,
+  modalType,
+  title,
+  ...rest
+} = Astro.props;
+
+const classLists = [
+  'modal',
+  modalType,
+  animation && 'animation',
+  open && 'active',
+  className,
+].filter(Boolean);
+---
+
+<div
+  role={role}
+  class={classLists.join(' ')}
+  data-modal={overlay ? 'overlay' : undefined}
+  {...rest}
+>
+  <div class="modal-wrap">
+    {title && <ModalHeader tabindex="0">{title}</ModalHeader>}
+    <slot />
+  </div>
+</div>

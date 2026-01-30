@@ -1,0 +1,49 @@
+@use "./mixins" as *;
+
+.typo-md-regular {
+  @include typo-md-regular;
+}
+
+.typo-md-medium {
+  @include typo-md-medium;
+}
+
+.typo-md-bold {
+  @include typo-md-bold;
+}
+
+.typo-sm-regular {
+  @include typo-sm-regular;
+}
+
+.typo-sm-medium {
+  @include typo-sm-medium;
+}
+
+.typo-sm-bold {
+  @include typo-sm-bold;
+}
+
+.typo-lg-reqular {
+  @include typo-lg-reqular;
+}
+
+.typo-lg-medium {
+  @include typo-lg-medium;
+}
+
+.typo-lg-bold {
+  @include typo-lg-bold;
+}
+
+.typo-xl-regular {
+  @include typo-xl-regular;
+}
+
+.typo-xl-medium {
+  @include typo-xl-medium;
+}
+
+.typo-xl-bold {
+  @include typo-xl-bold;
+}

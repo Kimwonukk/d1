@@ -1,0 +1,23 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import AccordionTrigger from './AccordionTrigger.astro';
+import AccordionContent from './AccordionContent.astro';
+
+interface Props extends HTMLAttributes<'div'> {
+  id?: string;
+  defaultActive?: boolean;
+  as?: 'div' | 'section';
+  title: string;
+}
+
+const { defaultActive = false, as = 'div', title } = Astro.props;
+const Tag = as;
+---
+
+<Tag
+  class:list={['accordion-item', defaultActive && 'active']}
+  data-accordion-item=""
+>
+  <AccordionTrigger>{title}</AccordionTrigger>
+  <AccordionContent><slot /></AccordionContent>
+</Tag>

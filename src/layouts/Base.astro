@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      import '/src/scripts/index.js';
+    </script>
+    <slot name="head" />
+  </head>
+  <body>
+    <slot name="body" />
+  </body>
+</html>
+
+<style is:global lang="scss">
+  @use '../styles/index';
+</style>

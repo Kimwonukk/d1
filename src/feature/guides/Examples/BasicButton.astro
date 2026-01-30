@@ -1,0 +1,34 @@
+---
+// import fs from 'fs/promises';
+
+// const base = '@/components/ui/Button';
+import Button from '@/components/ui/Button.astro';
+import AstroCodeViewer from '@/components/code/AstroCodeViewer.astro';
+---
+
+<h2>Button</h2>
+
+<AstroCodeViewer
+  component={Button}
+  sourcePath="src/components/ui/Button.astro"
+  js="console.log('js');"
+  props={[
+    {
+      variant: 'primary',
+      size: 'md',
+      type: 'button',
+      children: `<span>Primary ⭐</span>`,
+    },
+    {
+      variant: 'primary',
+      size: 'md',
+      type: 'button',
+      disabled: true,
+      children: `<span>Primary ⭐</span>`,
+    },
+  ]}
+  controls={{
+    variant: ['primary', 'secondary', 'outline'],
+    size: ['sm', 'md', 'lg'],
+  }}
+/>

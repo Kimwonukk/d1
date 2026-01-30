@@ -1,0 +1,19 @@
+---
+import data from '@/assets/data/token.json';
+import { baseColor } from '@/scripts/utils/objectUtil';
+import ColorCode from '@/components/guides/ColorCode.astro';
+---
+
+<h2>Base Color Tokens</h2>
+
+<ul class="base-section">
+  {
+    baseColor(data?.global?.color).map((item) => (
+      <li>
+        {Array.isArray(item.value) && (
+          <ColorCode name={item.name} value={item.value} />
+        )}
+      </li>
+    ))
+  }
+</ul>

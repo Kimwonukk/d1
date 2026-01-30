@@ -1,15 +1,20 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="stylesheet" href="/css/main.css" />
-    <link rel="stylesheet" href="/css/guide.css" />
-    <meta name="generator" content={Astro.generator} />
-    <title>GUIDE</title>
-  </head>
-  <body>
-    <slot />
-  </body>
-</html>
+---
+import Base from '@/layouts/Base.astro';
+---
+
+<Base>
+  <meta slot="head" charset="UTF-8" />
+  <meta slot="head" name="viewport" content="width=device-width" />
+  <link slot="head" rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <!-- <link rel="stylesheet" href="/css/guide.css" />
+    <link rel="stylesheet" href="/css/index.css" /> -->
+  <meta slot="head" name="generator" content={Astro.generator} />
+  <!-- <script is:inline src="/assets/common.js"></script> -->
+  <title slot="head">GUIDE</title>
+
+  <slot name="body" slot="body" />
+</Base>
+
+<style is:global lang="scss">
+  @use '../styles/guide';
+</style>

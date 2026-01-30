@@ -1,0 +1,15 @@
+---
+import Button from '@/components/ui/Button.astro';
+---
+
+<Button type="button" variant="outline" size="sm" id="call_toast"
+  >Toast 열기</Button
+>
+<script is:inline>
+  let index = 0;
+  document.querySelector('#call_toast')?.addEventListener('click', () => {
+    Toast.show(`Toast message ${++index}`).then((res) => {
+      console.log(res); // eslint-disable-line no-console
+    });
+  });
+</script>

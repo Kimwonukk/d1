@@ -1,0 +1,22 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'img'> {
+  src: string;
+}
+
+const { src: initialSrc, ...attrs } = Astro.props;
+
+let finalSrc = initialSrc;
+
+// 스마트 경로 로직
+// /, http, https, data: 로 시작하지 않으면 /assets/images/ 를 자동으로 붙임
+const isExternal = initialSrc.startsWith('http') || initialSrc.startsWith('data:');
+const isRootRelative = initialSrc.startsWith('/');
+
+if (!isExternal && !isRootRelative) {
+  finalSrc = `/assets/images/${initialSrc}`;
+}
+---
+
+<img src={finalSrc} {...attrs} />

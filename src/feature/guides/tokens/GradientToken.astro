@@ -1,0 +1,28 @@
+---
+import data from '@/assets/data/token.json';
+import GradientCode from '@/components/guides/GradientCode.astro';
+import { baseColor, type ValueData } from '@/scripts/utils/objectUtil';
+const getCasting = (value: object) => {
+  return value as Array<ValueData>;
+};
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<h2>Gradient Background Tokens</h2>
+
+<ul class="base-section">
+  {
+    baseColor(data?.global?.gradient).map((value) => {
+      return (
+        <li>
+          <GradientCode
+            name={value.name}
+            value={getCasting(value.value as object)}
+          />
+        </li>
+      );
+    })
+  }
+</ul>

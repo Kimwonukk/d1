@@ -1,0 +1,38 @@
+---
+import Container from '@structure/Container.astro';
+import GNB from './GNB.astro';
+---
+
+<header class="header">
+  <Container>
+    <div class="header__inner">
+      <a href="/" class="logo">Logo</a>
+      <GNB />
+    </div>
+  </Container>
+</header>
+
+<style is:global lang="scss">
+  @use '../../styles/mixins' as *;
+  .header {
+    background-color: var(--color-white-100);
+    border-bottom: 1px solid var(--color-black-50);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    &__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+    }
+
+    .logo {
+      @include typo-lg-bold;
+      color: var(--color-primary-normal);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+  }
+</style>

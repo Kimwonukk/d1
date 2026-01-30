@@ -1,32 +1,37 @@
 ---
+type ValueData = {
+  name: string;
+  value: string | ValueData[];
+};
 interface Props {
-  name: string
-  value: Array<{ name: string; value: string | object }>
+  name: string;
+  value: ValueData[];
 }
-const { name, value } = Astro.props // TypeScript 권장
+const { name, value } = Astro.props; // TypeScript 권장
 const toTokenName = (name: string) => {
-  let temp = name
-  if (!temp.includes("{")) {
-    return temp
+  let temp = name;
+
+  if (!(temp && String(temp).includes('{'))) {
+    return temp;
   }
-  temp = temp.replace("{", "").replace("}", "")
-  temp = temp.split(".").join("-")
-  return `--${temp}`
-}
+  temp = temp.replace('{', '').replace('}', '');
+  temp = temp.split('.').join('-');
+  return `--${temp}`;
+};
 ---
 
 <section>
   <h3>{name}</h3>
-  <ul class="token_code">
+  <ul class="token-code">
     {
       value.map((value) => (
         <li>
-          <div class="token_code_list">
+          <div class="token-code-list">
             <div
-              class="token_code_box"
+              class="token-code-box"
               style={`background-color: #eee;box-shadow: var(--shadow-${name}-${value.name});`}
             />
-            <button type="button" class="token_code_content">
+            <button type="button" class="token-code-content">
               <div class="codes">
                 <span>
                   <span class="css-token">{`--shadow-${name}-${value.name}`}</span>

@@ -1,0 +1,127 @@
+@use '../mixins' as *;
+
+/* 1️⃣ 최상위 포털 */
+[data-toast-root] {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+/* 2️⃣ bottom 기준 앵커 (절대 고정) */
+[data-toast-container] {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: env(safe-area-inset-bottom, 16px);
+
+  display: flex;
+  justify-content: center;
+}
+
+/* 3️⃣ 핵심: 위로 쌓이는 스택 */
+.toast-stack {
+  display: flex;
+  width: 100dvw;
+  align-items: center;
+  flex-direction: column-reverse; /* 🔥 핵심 */
+  gap: 8px;
+}
+
+/* 4️⃣ 개별 토스트 */
+.toast {
+  display: flex;
+  gap: 16px;
+  width: auto;
+
+  max-width: calc(100% - 40px);
+  padding: 16px;
+  border-radius: 16px;
+
+  pointer-events: auto;
+
+  /* 등장 애니메이션 */
+  opacity: 0;
+  transform: translateY(16px);
+  animation: toastEnter 0.3s ease forwards;
+  .toast-close-btn {
+    @include typo-sm-medium;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: var(--color-black-200);
+    color: var(--color-white-100);
+  }
+  &.toast-primary {
+    background-color: var(--color-primary-normal);
+    color: var(--color-white-100);
+  }
+  &.toast-secondary {
+    background-color: var(--color-secondary-normal);
+    color: var(--color-white-100);
+  }
+  &.toast-outline {
+    background-color: transparent;
+    border: 1px solid var(--color-black-200);
+    color: var(--color-black-300);
+  }
+  &.toast-md {
+    padding: 12px;
+    border-radius: 8px;
+    @include typo-md-medium;
+
+    p {
+      @include typo-md-medium;
+    }
+  }
+  &.toast-lg {
+    padding: 16px;
+    border-radius: 8px;
+    @include typo-lg-medium;
+
+    p {
+      @include typo-lg-medium;
+    }
+  }
+  &.toast-sm {
+    padding: 6px;
+    border-radius: 4px;
+    @include typo-sm-medium;
+
+    p {
+      @include typo-sm-medium;
+    }
+  }
+  &.toast-animate {
+    animation: toastEnter 0.3s ease forwards;
+  }
+  &.toast-out {
+    animation: toastOut 0.3s ease forwards;
+  }
+  // 민감 사용자 애니메이션 의존성을 제거
+  @media (prefers-reduced-motion: reduce) {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* 5️⃣ 애니메이션 */
+@keyframes toastEnter {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes toastOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
